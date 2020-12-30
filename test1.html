@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 相当于createApp中的template -->
+        <!-- <template></template> -->
+    </div>
+</body>
+
+<script>
+    const app=Vue.createApp({
+        data(){
+            return{
+                message:"消息！"
+            }
+        },
+        // 生命周期函数 其他的生命周期与vue2相同
+        beforeUnmount(){
+            console.log("vue实例失效前，自动执行的函数")
+        },
+        unmounted(){
+            console.log("vue实例失效时，且dom完成销毁后，自动执行的函数")
+        },
+        template:"<div>{{message}}</div>"
+    })
+    // vm代表的就是vue应用的根组件
+    const vm=app.mount("#root")
+
+</script>
+
+</html>
