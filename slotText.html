@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插槽</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+    const app=Vue.createApp({
+        template:`<div>
+                    <myFrom>
+                        <div>插槽部分（将该标签替换到子组件的slot部分）</div>
+                    </myFrom>
+                    <hr>
+                    <myFrom></myFrom>
+                    <hr>
+                    <nameslot>
+                        子组件
+                        <template v-slot:heads>
+                            <div>头部插槽(必须使用template)</div>
+                        </template>
+                        <template v-slot:footer>
+                            <div>脚部插槽</div>
+                        </template>
+                    </nameslot>
+                    <hr>
+                    <scopeSlot v-slot="slotProps">
+                        <li>{{slotProps.item}} 插槽标签</li>
+                    </scopeSlot>
+                </div>`
+    })
+
+    // 插槽
+    app.component('myFrom',{
+        template:`<div>
+                    <slot>
+                        <div>默认插槽(父组件调用该子组件时没有传插槽则使用当前标签为默认插槽)</div>
+                    </slot>
+                    <div>脚部</div>
+                </div>`
+    })
+
+    // 具名插槽<div>默认插槽(父组件调用该子组件时没有传插槽则使用当前标签为默认插槽)</div>
+    app.component('nameslot',{
+        template:`<div>
+                    <slot name="heads">
+                        <div>头部插槽的的默认标签(父组件中不传头部插槽时则使用默认插槽)</div>
+                    </slot>
+                    <div>content</div>
+                    <slot name="footer"></slot>
+                </div>`
+    })
+
+    // 作用域插槽
+    app.component('scopeSlot',{
+        data(){
+            return{
+                dataList:["1","2","3"]
+            }
+        },
+        // 当父组件中不传插槽时，子组件插槽中可以获取到item，但当父组件中传插槽后在父组件中则获取不到item的值，所以需要作用域插槽传值，在父组件中使用数据值
+        template:`<div>
+                    <slot v-for="item in dataList" :item="item">
+                        {{item}}
+                    </slot>
+                 </div>`
+    })
+
+    app.mount("#root")
+</script>
+
+</html>

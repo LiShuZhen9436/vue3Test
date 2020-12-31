@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动画</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        @keyframes rightToLeft {
+            0%{
+                transform:translateX(100px)
+            }
+            50%{
+                transform: translateX(-50px);
+            }
+            100%{
+                transform: translateX(0)
+            }
+        }
+        .animation{
+            animation: rightToLeft 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+    const capp=Vue.createApp({
+        data(){
+            return{
+                animation:true // 是否绑定animation动画样式
+            }
+        },
+        template:`<div :class="animation?'animation':''">Hellow word</div>`
+    })
+    capp.mount("#root");
+
+</script>
+
+</html>

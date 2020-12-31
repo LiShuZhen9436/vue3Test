@@ -17,18 +17,127 @@
     const app=Vue.createApp({
         data(){
             return{
-                message:"消息！"
+                message:"消息！",
+                title: "这是标题",
+                name:"title",  // 2、vue动态属性
+                event:"click", // 2、vue动态事件（动态绑定事件名称可以是click也可以是onmouseover鼠标移入事件）
+                num1: 3,
+                num2: 9
             }
         },
-        // 生命周期函数 其他的生命周期与vue2相同
+        // 1、生命周期函数 beforeUnmount，unmounted 其他的生命周期与vue2相同
         beforeUnmount(){
             console.log("vue实例失效前，自动执行的函数")
         },
         unmounted(){
             console.log("vue实例失效时，且dom完成销毁后，自动执行的函数")
         },
-        template:"<div>{{message}}</div>"
+        computed:{ // 3、计算属性； 当计算属性依赖的内容发生变化时，才会重新执行(比如 num1或者num2发生变化时就会重新执行)
+            getToatl(){
+                // return Date.now()
+                return this.num1*this.num2
+            }
+        },
+        methods:{ // 3、methods中的方法只要页面重新渲染 就会重新计算
+            handleClick(){
+                alert('点击事件！')
+            },
+            getTotal1(){
+                return Date.now()
+            },
+            // clicks(){
+            //     this.num2++;
+            //     console.log("num2:",this.num2);
+            // }
+        },
+        // template:`<div @click="handleClick" :title="title">{{message}}</div>`
+
+        // 2、动态绑定属性和事件
+        // template:`<div @[event]="handleClick" :[name]="title">{{message}}</div>`
+
+        // 3、当使用getToatl计算属性时，在console中动态修改message的值 时间字段不会刷新
+        // template:`<div>{{message}} {{getToatl}}</div>`
+
+        // 3、当使用methods中的方法时，在console中动态修改message的值 时间字段会刷新 因为div重新渲染了
+        // 4、给子组件传递props属性
+        // template:`<div>{{message}} {{getTotal1()}} 父组件
+        //     <counter msg="hellow" msg1="kkkkk" @aClicks="clicks(num)" />
+        //     </div>`
+
+        /* 
+            6、当子组件的点击事件修改的是父组件的data属性时可以通过v-model和子组件中update:modelValue配合实现
+            使用v-model向子组件传递需要修改的父组件的值，使用v-model传递时子组件必须使用modelValue接收和使用
+            v-model也可以使用v-model:aa="num2"来修改modelValue的名称为aa；
+            ** v-model也可以传递多个data属性在子组件中进行修改 例如 <counter v-model:num2="num2" v-model:num1="num1"/>
+        */
+        // 6、使用v-model时，也可以添加自定义修饰符例如uppercase，在子组件中根据是否有修饰符进行逻辑处理（当不写.uppercase时在组件中不进行大写处理）
+        template:`<div>父组件 <counter v-model.uppercase="num2" /></div>`
+        // 6+、父组件同时传递多个data属性进行修改
+        // template:`<div>父组件
+        //             <counter v-model:num2="num2" v-model:num1="num1" />
+        //         </div>`
     })
+
+    // 定义组件
+    app.component('counter',{
+        /*4、当父组件传了props但是子组件没有接收时，子组件的元素上面会渲染出父组件传递的属性，将inheritAttrs设置为false则不会渲染父组件传递的prop属性
+            但是当子组件中又多个标签时则不会渲染，如果想要渲染的话可以设置v-bind="$attrs"(比如想要渲染父组件传递的样式时可以使用)
+        */
+        // inheritAttrs:false, // 4、
+        // props:['msg'], // 4、
+        // 6、接收父组件传递的需要修改的值 或父组件自定义的值名称aa
+        // props:['modelValue'],
+        // 6+、修饰符
+        props:{
+            'modelValue':String,
+            'modelModifiers':{ //props的固定属性，default默认值为{}
+                default:()=>({})
+            }
+        },
+        // 6+、父组件同时传递多个data属性进行修改
+        // props:['num1','num2'],
+        // emits:{
+        //     aClicks:(count)=>{ // 5、拦截emit的aClicks事件
+        //         if(count<0){ // 5、传递的参数<0时执行 count<0时会在console中提示警告错误
+        //             return true;
+        //         }else{
+        //             return false;
+        //         }
+        //     }
+        // },
+        mounted(){
+            console.log(this.$attrs.msg); // 4、获取父组件的props属性
+        },
+        methods:{
+            /*
+             6、子组件点击时修改父组件的值 必须使用update:modelValue或者update:aa(aa为父组件自定义的model值)，
+             this.modelValue+3把父组件传过来的num2+3
+            */
+            aClick(){
+                // this.$emit("aClicks",3);// 5、向父组件传递方法
+                // 6、
+                let values=this.modelValue+'a';
+                if(this.modelModifiers.uppercase){ // 如果有uppercase修饰符 就将data属性值转换为大写
+                    values=values.toUpperCase();
+                }
+                this.$emit("update:modelValue",values);
+                // this.$emit("update:modelValue",this.modelValue+3);
+                // 6+、父组件同时传递多个data属性进行修改
+                // this.$emit("update:num1",this.num1+3);
+                // this.$emit("update:num2",this.num2+'a');
+            }
+        },
+        // 5、
+        // template:`<div v-bind:msg1="$attrs.msg1" @click="aClick()">counter子组件{{msg}}</div>
+        // <div v-bind="$attrs">counter子组件{{msg}}</div>
+        // <div>counter子组件{{msg}}</div>`
+
+        // 6、
+        template: `<div @click="aClick">子组件 {{modelValue}}</div>`
+        // 6+、父组件同时传递多个data属性进行修改
+        // template: `<div @click="aClick">子组件 {{num1}} {{num2}}</div>`
+    })
+
     // vm代表的就是vue应用的根组件
     const vm=app.mount("#root")
 

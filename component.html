@@ -1,0 +1,59 @@
+<!-- 动态组件 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态组件和异步组件</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+    // 动态组件，根据数据的变化，结合component这个标签，来随时动态切换组件的
+    const {createApp}=Vue;
+    const app={
+        data(){
+            return{
+                showComps:"component1" // 根据 showCompontent 的字段名称显示不同的组件
+            }
+        },
+        methods:{
+            changComp(){ // 点击按钮修改显示的组件名称
+                this.showComps==='component1' ? this.showComps='component2' : this.showComps='component1';
+            }
+        },
+        // 动态组件通过component 的is属性 根据data字段中的组件名称动态切换组件
+        template:`<div>
+                    <component :is="showComps"/>
+                    <button @click="changComp">切换</button>
+                    <async-component-item/>
+                 </div>`
+    }
+    let capp = createApp(app)
+    capp.component("component1",{
+        template:`<div>自定义组件1</div>`
+    })
+    capp.component("component2",{
+        template:`<div>自定义组件2</div>`
+    })
+
+    // 异步组件
+    capp.component("async-component-item", Vue.defineAsyncComponent(()=>{
+        return new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve({
+                    template:`<div>异步组件</div>`
+                })
+            },400)
+        })
+    }))
+
+    capp.mount("#root")
+</script>
+
+</html>
