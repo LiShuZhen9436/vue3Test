@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校验插件</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    const app=Vue.createApp({
+        data(){
+            return{
+                name: '张三',
+                age:25
+            }
+        },
+        rules:{
+            age:{
+                checkVal:(age)=>
+                 {
+                    console.log("age:",age)
+                    this.age>25,
+                 },
+                message: "太年轻了！"
+            },
+            name:{
+                checkVal:(name)=>this.name.length>4,
+                messge:"长度太短！"
+            }
+        },
+        template:`<div>
+                name：{{name}}, age：{{age}}
+            </div>`
+    })
+
+    app.mixin({
+        created(){
+            // console.log("wewewewe")
+            // 进行name和age的校验
+            for(let key in this.$options.rules){
+                // 执行校验方法
+                let item=this.$options.rules[key]
+                this.$watch(key,(value)=>{
+                    let res=item.checkVal(value)
+                    if(!res){ // 返回结果为false时执行
+                        console.log(item.messge)
+                    }
+                })
+            }
+        }
+    })
+
+    const vm=app.mount("#root")
+</script>
+</html>
