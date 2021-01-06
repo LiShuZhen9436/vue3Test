@@ -22,13 +22,13 @@
                 checkVal:(age)=>
                  {
                     console.log("age:",age)
-                    this.age>25,
+                    age>25;
                  },
                 message: "太年轻了！"
             },
             name:{
-                checkVal:(name)=>this.name.length>4,
-                messge:"长度太短！"
+                checkVal:(name)=>name.length>4,
+                message:"名称3长度太短！"
             }
         },
         template:`<div>
@@ -36,23 +36,27 @@
             </div>`
     })
 
-    app.mixin({
-        created(){
-            // console.log("wewewewe")
-            // 进行name和age的校验
-            for(let key in this.$options.rules){
-                // 执行校验方法
-                let item=this.$options.rules[key]
-                this.$watch(key,(value)=>{
-                    let res=item.checkVal(value)
-                    if(!res){ // 返回结果为false时执行
-                        console.log(item.messge)
-                    }
-                })
+    const myPlugin=(app,options)=>{
+        app.mixin({
+            created(){
+                // console.log("wewewewe")
+                // 进行name和age的校验
+                for(let key in this.$options.rules){
+                    // 执行校验方法
+                    let item=this.$options.rules[key]
+                    console.log("item:",item);
+                    this.$watch(key,(value)=>{
+                        console.log("key:",key,"value:",value);
+                        let res=item.checkVal(value)
+                        if(!res){ // 返回结果为false时执行
+                            console.log("item33333:",item);
+                            console.log(item.message)
+                        }
+                    })
+                }
             }
-        }
-    })
-
+        })
+    }
     const vm=app.mount("#root")
 </script>
 </html>
