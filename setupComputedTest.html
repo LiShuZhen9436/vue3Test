@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setup中的计算属性</title>
+    <script src="./vue3.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    const app=Vue.createApp({
+        // template:`<div>{{nameObj.name}}--{{comFun}}</div>`,
+        template:`<div>{{name}}</div>`,
+        setup(props,context){
+            const {reactive,toRefs,computed}=Vue
+            let nameObj=reactive({name:"张三"})
+            setTimeout(function(){
+                console.log("执行！")
+                nameObj.name="李四";
+            },2000)
+            const {name}=toRefs(nameObj)
+            return {name}
+            
+            // setup 中的计算属性
+            // let comFun=computed({
+            //     get:()=>{
+            //         return nameObj.name+" 现在 "
+            //     },
+            //     set:(parm)=>{
+            //         console.log("执行")
+            //         nameObj.name=parm + " 当前 "
+            //     }
+            // })
+            // setTimeout(function(){
+            //     console.log("执行！",comFun.value)
+            //     comFun.value="李四";
+            //     console.log("www:",comFun.value)
+            // },2000)
+            // return {nameObj,comFun}
+        }
+    })
+    app.mount("#root")
+</script>
+</html>

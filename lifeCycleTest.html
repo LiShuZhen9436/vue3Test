@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+    <script src="./vue3.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    const app=Vue.createApp({
+        template:`<div @click="handleClick()">{{name}}</div>`,
+        setup(props,context){
+            const {ref,onRenderTracked,onRenderTriggered}=Vue
+            let name=ref("张三")
+            // 每次渲染后重新收集响应式依赖
+            onRenderTracked(()=>{
+                console.log("onRenderTracked")
+            })
+            // 每次触发页面重新渲染时自动执行
+            onRenderTriggered(()=>{
+                console.log("onRenderTriggered")
+            })
+            const handleClick=()=>{
+                console.log("点击事件");
+                name.value="王五";
+                console.log("name:",name.value)
+            }
+            return {name,handleClick}
+        }
+    })
+    app.mount("#root")
+</script>
+</html>

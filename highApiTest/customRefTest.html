@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>customRef - 自定义ref</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root">
+        <div>
+          <h1>customRef - 自定义一个 ref</h1>
+          <p>{{text}}</p>
+          <input type="text" v-model="text" />
+        </div>
+    </div>
+</body>
+
+<script>
+    const app=Vue.createApp({
+        name: "CustomRef",
+        setup() {
+            const {customRef}=Vue
+            console.log("customRef:",customRef);
+            const useDebouncedRef=(value, delay = 200)=> {
+                let timeout;
+                return customRef((track, trigger) => {
+                    console.log("track:",track);
+                    console.log("trigger:",trigger)
+                    return {
+                        get() {
+                            track();
+                            return value;
+                        },
+                        set(newValue) {
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => {
+                            value = newValue;
+                            trigger();
+                            }, delay);
+                        },
+                    };
+                });
+            }
+            return {
+                text: useDebouncedRef("hello"),
+            };
+        },
+    })
+    app.mount("#root")
+    
+</script>
+</html>
