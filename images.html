@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+    <!-- <script src="./vue3.js"></script> -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div v-for="(item,index) in imgData" class="content_e">
+            <button>确定</button>
+            <div class="divz" :class="`${item.showz===1?'opacity':''}`">
+                <img class="img" :class="`${item.showz===1?'imgopacity':''}`" :src="item.imgSrc">
+            </div>
+            <span >{{item.spanTest}}</span>
+        </div>
+    </div>
+</body>
+<script>
+new Vue({
+  el: '#root',
+  data(){
+    return{
+        imgData:[{
+            btnTest:'确定',
+            spanTest:'span标签',
+            imgSrc:'./images/3.jpg',
+            showz: 0
+        },{
+            btnTest:'确定',
+            spanTest:'span标签',
+            imgSrc:'./images/3.jpg',
+            showz: 0
+        },{
+            btnTest:'确定',
+            spanTest:'span标签',
+            imgSrc:'./images/3.jpg',
+            showz: 1
+        },{
+            btnTest:'确定',
+            spanTest:'span标签',
+            imgSrc:'./images/3.jpg',
+            showz: 1
+        },{
+            btnTest:'确定',
+            spanTest:'span标签',
+            imgSrc:'./images/3.jpg',
+            showz: 0
+        }]
+    }
+  }
+})
+</script>
+
+<style>
+.content_e{
+    display: inline-block;
+    text-align: center;
+    margin: 10px 15px;
+
+}
+.content_e button{
+    margin: 5 auto;
+}
+.content_e span, .content_e button{
+    display: block;
+    text-align: center;
+}
+.divz{
+    display: inline-block;
+    overflow: hidden;
+}
+.img{
+    /* width: 140px; */
+    height: 120px;
+}
+.opacity{
+    background-color: black;
+}
+.imgopacity{
+    opacity: 0.5;
+}
+
+</style>

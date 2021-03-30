@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖、节流</title>
+</head>
+<body>
+    <button id="clickBtn">点击</button>
+    <div></div>
+
+    <script>
+        // 防抖函数 time时间段内，只执行一次
+        function debounce(fn,time=200){
+            console.log("8888")
+            console.log(typeof(fn))
+            if(typeof fn!=='function') return;
+            
+            let timeFn=null
+            return function(){
+                console.log("kkk")
+                var arg=arguments; // 获取参数
+                if(timeFn){
+                    clearTimeout(timeFn)
+                }
+                timeFn=setTimeout(function(){
+                    fn.apply(this,arg) // 调用函数
+                    var timeFn=null
+                },time)
+            }
+        }
+
+        function btnClickFn(){
+            console.log("点击",...arguments)
+        }
+
+        window.onload=function(){
+            // 循环调用防抖方法
+            let aaa=debounce(btnClickFn)
+            for(var i=0;i<5;i++){
+                aaa(1,2,3)
+            }
+            
+
+            // 循环调用节流方法
+            setTimeout(function() {
+                console.log("开始执行节流")
+                let bbb=throttle(btnClickFn,100)
+                for(var i=0;i<5;i++){
+                    bbb([6,8])
+                }
+            },1000)
+
+        }
+
+
+        // 节流 固定时间内只能点击一次
+        function throttle(fn,wait){
+            let oldTime=0;
+            return function(){
+                console.log("kkk")
+                let nowTime=new Date().valueOf() // 获取时间戳
+                console.log("lll",nowTime)
+                if(nowTime-oldTime>wait) {
+                    fn.apply(this,...arguments)
+                    oldTime=nowTime
+                }
+            }
+        }
+    </script>
+</body>
+</html>

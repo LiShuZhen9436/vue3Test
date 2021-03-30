@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise、async awit</title>
+</head>
+<body>
+    <script>
+        window.onload=function(){
+            // 串行执行，执行完一个再执行下一个
+            let res=yb().then(res=>{
+                console.log("第一个Promise then 方法获取结果：", res)
+
+                console.log("**********第一个异步操作执行完成后 调用第二个异步Promise**********")
+                return yb1(res) // 必须有return才能在then方法中获取到返回数据
+            }).then((res1)=>{
+                console.log("第二个Promise then 方法获取结果:",res1)
+
+                console.log("**********第二个异步操作执行完成后 调用第三个异步Promise**********")
+                return yb3(res1)
+            }).then((res3)=>{
+                console.log("第三个Promise then 方法获取结果",res3)
+            })
+            .catch(err=>{
+                console.log("error:", eroor)
+            })
+
+            // 并行执行多个异步方法
+            // Promise.all([yb1({}),yb({}),yb3({})]).then(res=>{
+            //     console.log("res:",res)
+            // })
+
+            async function a (){
+                console.log("*********async awit*************")
+
+                let res= await yb();
+                console.log("第一个异步函数返回结果：", res)
+
+                let res1=await yb3(res);
+                console.log("第二个异步函数返回结果：", res1)
+
+                let res2=await yb1(res1);
+                console.log("第三个异步函数返回结果：", res2)
+            }
+
+            setTimeout(a,10000) // 6000 毫秒后调用async函数
+
+            setTimeout(()=>{
+                b()
+            },20000)
+
+            async function b(){
+               let b= await Promise.all([yb1({}),yb({}),yb3({})])
+               console.log("b:",b)
+            }
+        }
+        
+        var yb = function(){
+           return new Promise(function(resolve,reject){
+                setTimeout(()=>{
+                    console.log("11111")
+                    resolve({a:1,b:3})
+                },3000)
+            })
+        }
+
+        const yb1=function(res){
+            return new Promise(function(resolve,reject){
+                setTimeout(()=>{
+                    console.log("22222")
+                    let s={c:"ddddd"}
+                    resolve(Object.assign(res,s))
+                },2500)
+            })
+        }
+
+        const yb3=function(res){
+            return new Promise(function(resolve, reject){
+                setTimeout(()=>{
+                    console.log("33333")
+                    let f={d:"iiiiii"}
+                    resolve(Object.assign(res,f))
+                },1000)
+            })
+        }
+    </script>
+</body>
+</html>
