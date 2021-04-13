@@ -8,6 +8,7 @@
 <body>
     <script>
         window.onload=function(){
+
             // 串行执行，执行完一个再执行下一个
             let res=yb().then(res=>{
                 console.log("第一个Promise then 方法获取结果：", res)
@@ -44,6 +45,8 @@
                 console.log("第三个异步函数返回结果：", res2)
             }
 
+            console.log('判断会不会被async阻塞')
+
             setTimeout(a,10000) // 6000 毫秒后调用async函数
 
             setTimeout(()=>{
@@ -57,7 +60,8 @@
         }
         
         var yb = function(){
-           return new Promise(function(resolve,reject){
+            return new Promise(function(resolve,reject){
+               console.log("kkk")
                 setTimeout(()=>{
                     console.log("11111")
                     resolve({a:1,b:3})

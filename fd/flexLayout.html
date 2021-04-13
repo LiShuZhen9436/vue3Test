@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex 练习</title>
+</head>
+<style>
+    body,html{
+        margin: 0;
+        padding: 0;
+    }
+    .content{
+        display: flex;
+        /*
+          1、主轴方向 row 水平方向 column 垂直方向 row | row-reverse | column | column-reverse
+         flex-direction: column;
+         */
+
+        /*
+            2、如果一条轴线排列不下 是否换行 nowrap | wrap | wrap-reverse
+        */
+        /* flex-wrap: wrap; */
+
+        /* 3、flex-flow flex-direction和flex-wrap的缩写  */
+        /* flex-flow: row wrap; */
+
+        /* 4、水平方向的对齐方式 5 个值 
+            flex-start（默认值）：左对齐
+            flex-end：右对齐
+            center： 居中
+            space-between：两端对齐，项目之间的间隔都相等。
+            space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+         */
+        /* justify-content: space-around; */
+
+        /* 5、交叉轴的对齐方式 5个值
+            flex-start：交叉轴的起点对齐。
+            flex-end：交叉轴的终点对齐。
+            center：交叉轴的中点对齐。
+            baseline: 项目的第一行文字的基线对齐。
+            stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+        */
+        /* align-items: center; */
+
+        /* 使用场景 ？？ */
+        /* align-content: center; */
+
+    }
+    .content div{
+        border:1px solid red;
+        width: 60px;
+        text-align: center;
+    }
+    .content div:nth-child(1){
+        height: 200px;
+    }
+    .content div:nth-child(2){
+        height: 120px;
+        /* 排列顺序 默认为0 数值越小越靠前 */
+        /* order: 1; */
+
+        /* 项目的放大比例默认为0 即有剩余空间也不放大 */
+        /* flex-grow: 1; */
+
+        /* 项目的缩小比例，默认为1，即如果空间不足 该项目将缩小；为0 则不缩小 */
+        /* flex-shrink: 0; */
+
+        /* 项目占据的主轴空间 auto项目本来的大小 或者固定值列如350px */
+        /* flex-basis: auto; */
+
+        /* flex 是 flex-grow, flex-shrink, flex-basis的缩写 
+            auto 代表 1 1 auto； none 代表 0 0 auto
+        */
+        /* flex:auto; */
+        /* flex: none; */
+
+        /* 单个项目与其他项目不一样的对齐方式 */
+        align-self: flex-end;
+    }
+    .content div:nth-child(3){
+        height: 100px;
+    }
+    .content div:nth-child(4){
+        height: 200px;
+    }
+    .content div:nth-child(5){
+        height: 160px;
+    }
+    .content div:nth-child(6){
+        height: 130px;
+    }
+    .content div:nth-child(7){
+        height: 180px;
+    }
+    .content div:nth-child(8){
+        height: 200px;
+    }
+
+    /* .content1{
+        display: flex;
+    } */
+
+
+    /* 示例 1 */
+    .box{
+        display: flex;
+        justify-content: space-between;
+        width: 60px;
+        height: 60px;
+        background-color: blueviolet;
+    }
+    .box span{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: black;
+    }
+    .box span:nth-child(2){
+        align-self: center;
+    }
+    .box span:nth-child(3){
+        align-self: flex-end;
+    }
+
+
+    /* 示例 2 */
+    .box1{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 80px;
+        height: 80px;
+        background-color: blueviolet;
+        margin: 20px;
+    }
+    .box1 .column{
+        flex-basis: 100%;
+        background-color: burlywood;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .box1 span{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: black;
+    }
+
+    /* 示例 3 */
+    .grid{
+        display: flex;
+    }
+    .grid-cell{
+        flex: 1;
+        border: 1px solid red;
+        width: 40px;
+        height: 40px;
+    }
+</style>
+<body>
+    <div class="content">
+        <div class="one">one</div>
+        <div class="two">two</div>
+        <div class="three">three</div>
+        <div class="four">four</div>
+        <div class="five">five</div>
+        <div class="six">six</div>
+        <div class="seven">seven</div>
+        <div class="eight">eight</div>
+
+        <!-- <div class="content1">
+            <div class="one">one</div>
+            <div class="two">two</div>
+            <div class="three">three</div>
+            <div class="four">four</div>
+            <div class="five">five</div>
+            <div class="six">six</div>
+            <div class="seven">seven</div>
+            <div class="eight">eight</div>
+        </div> -->
+    </div>
+
+    <div class="box">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    <div class="box1">
+        <div class="column">
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="column">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+
+    <div class="grid">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex 布局Demo</title>
+</head>
+<style>
+    body,html,.con_all{
+        width: 100%;
+        height: 100%;
+    }
+    .con_all{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between ;
+    }
+    header,footer{
+        height: 200px;
+        background-color: chartreuse;
+    }
+    .middle{
+        background-color: chocolate;
+        display: flex;
+        justify-content: space-between;
+        height: 100%;
+    }
+    .middle .left,.middle .right{
+        width: 12em;
+        background-color: cornflowerblue;
+    }
+    /* 小屏幕时竖屏显示 */
+    @media (max-width: 768px) {
+        .middle{
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .middle .left,.middle .right{
+            width: 100%;
+            height: 50px;
+
+        }
+    }
+</style>
+<body>
+    <div class="con_all">
+        <header></header>
+        <div class="middle">
+            <div class="left"></div>
+            <div class="content"></div>
+            <div class="right"></div>
+        </div>
+        <footer></footer>
+    </div>
+</body>
+</html>
