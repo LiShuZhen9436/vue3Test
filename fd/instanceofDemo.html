@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>instantanceOf 手写</title>
+</head>
+<body>
+    <script>
+        function Cat(name,age,type){
+            this.name = name;
+            this.age = age;
+            this.type = type;
+        }
+        function Dog(name){
+            this.name = name;
+        }
+        var cats = new Cat('有鱼',2,'英短');
+        var dogs = new Dog('哈士奇');
+        console.log(cats instanceof Cat);  // true
+        console.log(dogs instanceof Dog);  // true
+        console.log(cats instanceof Object);  // true
+        console.log(dogs instanceof Object);  // true
+
+        // console.log(instance_of(cats, Cat));  // true
+        // console.log(instance_of(dogs, Dog));  // true
+        console.log(instance_of(cats, Object));  // true
+        // console.log(instance_of(dogs, Object));  // true
+
+        // 手写instanceof
+        function instance_of(L, R){ // L 表示对象实例； R 构造函数或者父类型实例
+            var O=R.prototype;
+            L=L.__proto__;
+            while(true){
+                console.dir(L)
+                if(L===null)
+                    return false
+                if (L===O)
+                    return true
+                L=L.__proto__; // 相当于一级一级的遍历 L对象的 原型链
+            }
+        }
+    </script>
+</body>
+</html>

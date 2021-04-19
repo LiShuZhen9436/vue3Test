@@ -10,7 +10,7 @@
     <div></div>
 
     <script>
-        // 防抖函数 time时间段内，只执行一次
+        // 延迟执行 -- 防抖函数 time时间段内，只执行一次
         function debounce(fn,time=200){
             console.log(typeof(fn))
             if(typeof fn!=='function') return;
@@ -28,17 +28,55 @@
             }
         }
 
+        // 立即执行防抖 + 延迟执行防抖
+        function debounce1(fn, wait=1000, immediate=true){ // immediate 是否立即执行
+            let timer, context, args
+
+            const laster=()=>setTimeout(()=>{
+                timer=null
+                if(!immediate){ // 延迟执行
+                    fn.apply(context, args)
+                    context =args = null;
+                }
+            }, wait);
+            return function(...parmes){
+                if (!timer) {
+                    timer=laster();
+                    if(immediate){ // 立即执行时 执行传入的函数
+                        fn.apply(this, parmes);
+                    }else{
+                        context=this; args=parmes;
+                    }
+                }else{
+                    clearTimeout(timer);
+                    timer=laster();
+                }
+            }
+        }
+
         function btnClickFn(){
             console.log("点击",...arguments)
         }
 
         window.onload=function(){
+            // 点击按钮调用 防抖函数
+            let aaa2=debounce1(()=>{console.log('fffff');});
+            document.getElementById("clickBtn").onclick=function(){
+                aaa2("需要传递的参数")
+            }
+
             // 循环调用防抖方法
             let aaa=debounce(btnClickFn)
             for(var i=0;i<5;i++){
                 aaa(1,2,3)
             }
             
+            // 循环调用立即执行 防抖函数
+            let aaa1=debounce1(btnClickFn)
+            // let aaa1=debounce1(btnClickFn,1000,false)
+            for(let j=0;j<5;j++){
+                aaa1('aad')
+            }
 
             // 循环调用节流方法
             setTimeout(function() {

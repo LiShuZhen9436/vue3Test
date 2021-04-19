@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深拷贝 浅拷贝示例</title>
+</head>
+<body>
+    <script>
+        // 浅拷贝 两个对象第一层引用不相同  assign和...扩展运算符时浅拷贝
+        let obj1={
+            a:1,
+            b:{
+                b2:'333'
+            }
+        }
+        let c=Object.assign({},obj1) // 浅拷贝 示例1
+        console.log('c:',c);
+        c.a=3
+        c.b.b2='888';
+        console.log('c2:',c);
+        console.log('obj1:',obj1);
+
+
+        let one={
+            aa:1,
+            d:{
+                ddd:'ff'
+            }
+        }
+        let two={
+            bb:2
+        }
+        let thr={...one,...two} // 浅拷贝 示例 2
+        console.log('thr:',thr)
+        thr.aa='1111'
+        thr.d.ddd='rrr'
+        thr.bb='222'
+        console.log('thr11:',thr)
+        console.log('one:',one)
+        console.log('two:',two)
+
+        // 深拷贝 两个对象所有的引用都不相同
+    </script>
+</body>
+</html>

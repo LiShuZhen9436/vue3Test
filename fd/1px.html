@@ -6,15 +6,18 @@
     <title>1px 问题</title>
 </head>
 <style>
+    div{
+        width: 300px;
+        height: 300px;
+    }
     div::after{
         content: '';
-        width: 200%;
-        /* height: 200%; */
-        height: 200px;
+        width: 600px;
+        height: 600px;
         position: absolute;
-        top: 0;
-        left: 0;
-        border: 1px solid #bfbfbf;
+        /* top: 0;
+        left: 0; */
+        border: 1px solid black;
         border-radius: 4px;
         -webkit-transform: scale(0.5,0.5);
         transform: scale(0.5,0.5);
@@ -22,6 +25,6 @@
     }
 </style>
 <body>
-    <div>123</div>
+    <div class="one-border-after"></div>
 </body>
 </html>

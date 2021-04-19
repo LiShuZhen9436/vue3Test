@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串模板</title>
+</head>
+<body>
+    <script>
+        const temp=(datas)=>{
+            let ff=`<table>
+                ${
+                    datas.map(item=>
+                        `<tr>${item.name}</tr>
+                        <tr>${item.age}</tr>`
+                    ).join(' ')
+                }
+            </table>`
+            return ff;
+        }
+
+        let data=[{
+            name:"张三",
+            age:"22"
+        }, {
+            name:"李四",
+            age:"25"
+        }]
+       let dd=temp(data);
+       console.log("dd:",dd);
+
+
+       let a=5;
+       let b=10;
+       function tag(s,val1,val2) {
+        console.log("s:", s);
+        console.log("val1:", val1);
+        console.log("val2:", val2);
+       }
+       tag `Hello ${a+b} Word ${a*b}`
+
+
+
+       // 字符串操作方法
+       let str="hello Word";
+       console.log("str:", str.indexOf("o"));
+       console.log("str1:", str.includes("W"));
+       console.log("开始：", str.startsWith("h"));// 返回bool类型的值 判断字符串是否是以 h 开头
+       console.log("结束：", str.endsWith("d"));
+
+       let ary=["q", "w", "e", "r", "t"];
+       console.log("数组截取：", ary.indexOf("w"));
+       console.log("包含：", ary.includes("r"))
+
+       // repeat()
+       console.log('f'.repeat(5)); // 返回一个新字符串
+
+       console.log('aabbcc'.replace('b', '_')); // 字符串替换 只匹配查找到的第一个 返回新字符串不改变原来的字符串
+       console.log('aabbcc'.replace(/b/g, '_')); // 替换所有匹配到的字符
+       console.log('aabbcc'.replaceAll('b', '_')); // es2021 新增的替换所有字符  返回新字符串不改变原来的字符串
+    </script>
+</body>
+</html>
