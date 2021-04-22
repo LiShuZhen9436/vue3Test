@@ -8,16 +8,36 @@
 </head>
 <body>
     <script>
-        let values=[1,2,3,4,5];
-        function getSum(){
-            console.log('arguments:',arguments)
-            let sum=0;
-            for(let i=0;i<arguments.length;i++){
-                sum+=arguments[i];
-            }
-            return num;
+        // let values=[1,2,3,4,5];
+        // function getSum(){
+        //     console.log('arguments:',arguments)
+        //     let sum=0;
+        //     for(let i=0;i<arguments.length;i++){
+        //         console.log('every:',arguments[i])
+        //         sum+=arguments[i];
+        //     }
+        //     return sum;
+        // }
+        // console.log(getSum(values));
+        // console.log(getSum.apply(null,values))
+
+        // console.log(getSum(...values));
+
+        // function getSum1(...values){
+        //     console.log('values:',values);
+        //     console.log('arg:',arguments[1]);
+        //     return values.reduce((pre,cur)=>pre+cur,0);
+        // }
+        let getSum1=(...values)=>{
+            console.log(values)
+            /* 箭头函数中没有this arguments只能使用名明参数，也不能使用
+                
+
+            */
+            // console.log('arg:',arguments);
+            return values.reduce((pre,cur)=>pre+cur,0);
         }
-        console.log(getSum(values))
+        getSum1(1,2,3)
     </script>
 </body>
 </html>

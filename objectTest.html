@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>object 练习</title>
+</head>
+<body>
+    <script>
+        // Object.assign 无法正确拷贝get set 方法
+        const source={
+            set foo(value){
+                console.log(value)
+            },
+            pfun () {
+                console.log('普通函数')
+            }
+        }
+        let tager = {};
+        tager = Object.assign({},source);
+        console.log(tager)
+        //Object.getOwnPropertyDescriptor(tager, 'foo')  // get方法为空
+
+        let tager1 = {};
+        // tager1 = Object.assign()
+        Object.defineProperties(tager1, Object.getOwnPropertyDescriptors(source));
+        Object.getOwnPropertyDescriptor(tager1, 'foo')
+        console.log(tager1)
+
+
+        console.log("******__proto__属性***************");
+        let somethig = {
+            name:"张三",
+            getName(){
+                console.log("name:", this.name)
+            }
+        }
+        // es5 写法
+        const obj={
+            selfFun(){
+                console.log('自带方法');
+            }
+        }
+        obj.__proto__=somethig;
+        console.dir(obj);
+
+        // es6
+        let obj1=Object.create(somethig);
+        obj1.selFun=function(){
+            console.log("自带方法！")
+        }
+        console.dir(obj1);
+
+        // es6 setPrototypeOf 设置一个对象的原型对象
+        let o = Object.setPrototypeOf({},somethig);
+        console.log("o:", o);
+
+        // 实例 将proto对象设为obj对象的原型，所以从obj对象可以读取proto对象的属性。
+        let proto = {};
+        let obj2 = { x: 10 };
+        Object.setPrototypeOf(obj2, proto);
+        console.log('obj2:', obj2);
+
+        proto.y=10;
+        proto.z=90;
+        console.log('obj2:', obj2);
+        console.log('x: ',obj2.x,'y: ', obj2.y, 'z: ', obj2.z);
+
+        // Object.fromEntries
+        let arrays=[['boor', 1],['foo',2]]
+        console.log('将数组转换成对象：', Object.fromEntries(arrays));
+
+
+
+    </script>
+</body>
+</html>
