@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写call, apply, bind</title>
+</head>
+<body>
+    <script>
+        // 手写call 在函数原型链上面添加mycall方法 
+        Function.prototype.myCall=function(context, ...args){ //  ...args; 参数为列如："参数1", "参数2", "参数3"
+            console.log('参数：', arguments)
+            console.log('args:', args);
+            context=context || window; // 1、首先context为可选参数，如果不传的话默认上下文是window
+            let fn=Symbol();
+            context[fn]=this; // 2、接下来给content创建一个fn属性，并将值设置为需要调用的函数
+            console.log('context:',context);
+            console.log('context:',context[fn]);
+            let result = context[fn](...args); // 3、然后调用函数并将对象上的函数删除
+            delete context[fn];
+            return result;
+        }
+
+        Function.prototype.myApply=function(context){ // 参数为列如：["参数1", "参数2", " 参数3"]
+            console.log('myApply参数：', arguments);
+            context=context || window;
+            let fn=Symbol();
+            context[fn]=this;
+            let res;
+            if (arguments[1]) { // 进行参数处理
+                res=context[fn](arguments[1]);
+            }else{
+                res=context[fn]();
+            }
+            delete context[fn];
+            return res;
+        }
+
+        Function.prototype.myBind = function (context) {
+            var _this = this
+            var args = [...arguments].slice(1)
+            // 返回一个函数
+            return function F() {
+                // 因为返回了一个函数，我们可以 new F()，所以需要判断
+                if (this instanceof F) {
+                return new _this(...args, ...arguments)
+                }
+                return _this.apply(context, args.concat(...arguments))
+            }
+        }
+
+
+        // obj对象调用mycall
+        var db={
+            name:"小青",
+            age:23
+        }
+        let obj={
+            name:"张三",
+            age:25,
+            myFun:function myFun(params) {
+                console.log('我叫：',this.name,'今年：',this.age, '性别：', params)
+            }
+        }
+        obj.myFun('男');
+        obj.myFun.myCall(db,'女');
+        obj.myFun.myApply(db,['女', '女孩']);
+
+        // 构造函数调用mycall
+        function Person(name) {
+            this.name=name;
+            console.log('姓名:',this.name)
+        }
+        Person.prototype.getName=function(){
+            return this.name
+        }
+        function Man(name,sex) {
+            this.sex=sex;
+            Person.myCall(this, name, '333'); // 要使用this使用Main会出现问题 可以继续添加原型链继承得到name的值
+            console.log('性别：',this.sex);
+        }
+        Man.prototype=Object.create(Person.prototype); // new Person();
+        Man.constructor=Man;
+        let man1=new Man('李四', '男');
+        console.dir(man1);
+        console.log('Man-name', man1.getName());
+
+        let person1=new Person('222');
+        console.log('ggg:',person1.getName())
+    </script>
+</body>
+</html>

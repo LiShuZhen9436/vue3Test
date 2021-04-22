@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1px 问题</title>
+</head>
+<style>
+    div{
+        width: 300px;
+        height: 300px;
+    }
+    div::after{
+        content: '';
+        width: 600px;
+        height: 600px;
+        position: absolute;
+        /* top: 0;
+        left: 0; */
+        border: 1px solid black;
+        border-radius: 4px;
+        -webkit-transform: scale(0.5,0.5);
+        transform: scale(0.5,0.5);
+        -webkit-transform-origin: top left;
+    }
+</style>
+<body>
+    <div class="one-border-after"></div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch和watchEffect</title>
+    <script src="./vue3.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+    const app=Vue.createApp({
+        template:`<div>name:<input v-model="name"><span>   name is:{{name}}</span></div>`,
+        setup(props,context){
+            const {reactive,ref,watch,toRefs,watchEffect}=Vue
+            // let name=ref("张三")
+            let nameObj=reactive({name:"张三"}) // 定义响应式对象
+            /*
+                watch(name,(newVal,oldVal) -> 第一个参数监听的属性名，使用字符串的时候使用，不适用于对象
+                watch(()=>nameObj.name,(newVal,oldVal) -> 监听对象时必须使用函数方法
+            */
+            // watch(name,(newVal,oldVal)=>{
+            watch(()=>nameObj.name,(newVal,oldVal)=>{
+                console.log('oldVal:',oldVal,"newVal:",newVal)
+            })
+
+            /*
+                立即执行，没有惰性
+                不需要传递侦听的内容，自动会感应代码依赖
+                不能获取之前的数据值
+            */
+            const stop=watchEffect(()=>{
+                console.log("watchEffect侦听！！！",nameObj.name)
+            })
+
+            let {name}=toRefs(nameObj)
+            return {name}
+        }
+    })
+    app.mount("#root")
+</script>
+</html>

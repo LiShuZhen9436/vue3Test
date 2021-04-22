@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写New</title>
+</head>
+<body>
+    <script>
+        function Dog(name){
+            console.log('qqq',name)
+            this.name=name
+        }
+        Dog.prototype.eat=function(){
+            console.log(this.name+'吃。。。')
+        }
+        function newFun(fn, ...args){ // ...args解构参数
+            let son=new Object(); // 新建一个对象
+            son.__proto__=fn.prototype;
+            fn.call(son, args); // 调用父函数的构造函数
+            console.dir(son)
+            return son
+        }
+        let c=newFun(Dog,'狗子！')
+        console.dir(c)
+        console.log(c instanceof Dog)
+    </script>
+</body>
+</html>

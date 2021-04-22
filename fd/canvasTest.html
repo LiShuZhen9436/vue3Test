@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canavs 画布</title>
+
+    <canvas id="drawing" width="500px" height="500px">drawing</canvas>
+</head>
+<body>
+    <script>
+        window.onload=function(){
+            /* ********
+            Canavs中 fillStyle 填充属性
+                     strokeStyle 描边属性
+            
+            ****** */
+            // drawCircle()
+            // drawFont()
+            drawLinearGradient()
+
+            // 绘制矩形
+            function drawRect(){
+                let drawing=document.getElementById("drawing");
+                if(drawing.getContext){
+                    var context=drawing.getContext("2d"); // 获取2d画笔
+                    // context.strokeStyle="red";
+                    // context.fillStyle="#0000ff";
+
+                    // 绘制红色矩形 填充
+                    context.fillStyle="#ff0000";
+                    context.fillRect(10,10,50,50);
+                    // 描边
+                    // context.strokeStyle="#ff0000";
+                    // context.strokeRect(10,10,50,50);
+
+                    // 绘制蓝色半透明矩形 填充颜色
+                    context.fillStyle="rgba(0,0,255,0.5)";
+                    context.fillRect(30,30,50,50)// 矩形的x轴坐标 y轴坐标，矩形的宽度，矩形的高度
+
+                    // 描边
+                    // context.strokeStyle="rgba(0,0,255,0.5)";
+                    // context.strokeRect(30,30,50,50)
+
+                    // 两个矩形重叠的地方清除一个小矩形
+                    context.clearRect(40,40,10,10)
+                }else{
+                    console.log("lllll")
+                }
+            }
+
+            // 绘制圆
+            function drawCircle(){
+                var context=document.getElementById("drawing");
+                if(context.getContext){
+                    var context=context.getContext("2d");
+
+                    context.beginPath();// 表示开始绘制新路径
+
+                    // 绘制外部圆
+                    context.arc(100, 100, 99, 0, 2*Math.PI, false); // 开始圆心（x,y,半径，开始角度，结束角度，顺时针开始（true逆时针））
+
+                    // 绘制内部圆
+                    context.moveTo(194,100);// 将绘图游标移动到一个点，不画线 参数：x坐标，y坐标；选取内圆周长上面的一个点，避免绘制出多余的弧线
+                    context.arc(100,100,94,0,2*Math.PI,false);
+
+                    // 绘制分针
+                    // context.moveTo(100,100); // 移动游标
+                    // context.lineTo(100,30); // lineTo从一个点开始绘制直线，到（x,y）为止；
+
+                    // 绘制时针
+                    // context.moveTo(100,100);
+                    // context.lineTo(50,100);
+
+                    // 使用第二种方法绘制时钟
+                    context.translate(100,100);//将坐标原点移动到 100，100位置 translate改变坐标原点
+                    // context.rotate(1)// 旋转
+                    context.moveTo(0,0);
+                    context.lineTo(0,-90);
+
+                    context.moveTo(0,0);
+                    context.lineTo(-80,0);
+
+                    context.stroke(); // 描边路径（不使用的话，绘制不出图像）
+
+                    // 绘制文本
+                    context.translate(0,0);
+                    context.font="bold 14px Arial"; // 文本样式
+                    context.textAlign="center";// 文本对齐方式
+                    // context.textAlign="start";
+                    // context.textAlign="end";
+                    context.textBaseline="middle";// 文本垂直对齐方式
+                    // context.textBaseline="top";
+                    // context.textBaseline="bottom";
+                    // context.textBaseline="ideographic";
+                    context.fillText("12",100,20); // fillText() 接收4个参数：要绘制的文本， x坐标，y坐标，可选择最大像素
+                    // context.fillText("12",0,-90);
+                }
+            }
+
+            // 绘制字体
+            function drawFont(){
+                var drawing=document.getElementById("drawing");
+                if(drawing.context){
+                    var context=drawing.context("2d");
+
+                    var fontsize=100;
+                    context.font=fontsize+"px Arial";
+
+                    while(context.measureText("Hello Word").width>140){
+                        fontsize--;
+                        context.font=fontsize="px Arial"
+                    }
+
+                    context.fillText("Hellow word",10,10)
+                    context.fillText("font size is"+ fontsize +"px", 10,50)
+                }
+            }
+
+            // 绘制渐变效果
+            function drawLinearGradient(){
+                let drawing=document.getElementById("drawing");
+                if(drawing.getContext){
+                    var context=drawing.getContext("2d"); // 获取2d画笔
+
+                    var gradient=context.createLinearGradient(30,30,70,70);// 渐变起点x坐标，渐变起点y坐标，渐变起点y坐标，渐变终点y坐标
+                    gradient.addColorStop(0,"white");
+                    gradient.addColorStop(1,"black");
+
+                    // 绘制一个填充红色的矩形
+                    context.fillStyle="#ff0000";
+                    context.fillRect(10,10,50,50);
+
+                    // 绘制一个填充渐变色的矩形
+                    context.fillStyle=gradient;
+                    context.fillRect(30,30,50,50);
+
+                }
+            }
+
+            // 彩色变黑白
+            // function
+        }
+    </script>
+</body>
+</html>

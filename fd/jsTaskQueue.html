@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 任务队列 宏任务、微任务执行顺序</title>
+</head>
+<body>
+    <script>
+        // 当有微任务队列和宏任务队列时，会先把微任务中的所有任务都执行完，再执行宏任务
+        console.log('1, time = ' + new Date().toString()) // 同步执行 打印 1 
+        setTimeout(macroCallback, 0); // 加入到异步进程，异步进程处理完成后加入到 宏任务（任务队列）队列
+        new Promise(function(resolve, reject) {
+            console.log('2, time = ' + new Date().toString()) // 同步执行 打印 2
+            resolve(); // 同步执行
+            console.log('3, time = ' + new Date().toString()) // 同步执行 打印 3
+        }).then(microCallback); // 加入到异步进程，异步进程处理完成后加入到 微任务（任务队列）队列
+
+        new Promise(function(reslove,reject){
+            console.log('6, time=' + new Date().toString())
+            reslove()
+        }).then(microCallback1)
+
+        function macroCallback() { // 在宏任务队列
+            console.log('4, time = ' + new Date().toString())
+        } 
+
+        function microCallback() { // Promise在微任务队列，所以会先打印5 再打印4
+            console.log('5, time = ' + new Date().toString())
+        }
+
+        function microCallback1() {
+            console.log('7, time=' + new Date().toString())
+            setTimeout(function(){
+                console.log('8, time=' + new Date().toString())
+            },0)
+        }
+
+
+        var b=33;
+        var a=()=>{
+            var b=1;
+            console.log(this.b)
+        }
+        // function a(){
+        //     var b=1;
+        //     console.log(this.b);
+        // }
+        var obj={
+            "b":666
+        }
+        a.call(obj)
+    </script>
+</body>
+</html>

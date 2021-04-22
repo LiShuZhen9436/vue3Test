@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6 入门练习 变量的解构 赋值</title>
+</head>
+<body>
+    <script>
+        function* fibs() {
+            let a = 0;
+            let b = 1;
+            while (true) {
+                yield a;
+                [a, b] = [b, a + b];
+            }
+        }
+
+        console.log("********************数组解构******************************************")
+        let [first, second, third, fourth, fifth, sixth] = fibs();
+        console.log('sixth:',sixth);
+
+        // 解构赋值使用默认值 （ **只有数组成员严格等于undefined, 默认值才会生效）
+        let [foo=true]=[undefined]
+        console.log("foo:",foo); // true
+
+        let [foo1=true]=[false]; // false
+        console.log("foo1:",foo1);
+
+        let [foo2=3,a]=[null,4]; // 只有数组成员严格等于undefined, 默认值才会生效
+        console.log("foo2:",foo2,"a:",a); // foo2: null a: 4；；null不严格等于undefined
+
+        function f(){
+            console.log("aaaaa");
+            return "aaaa"
+        }
+        let [x=f()]=[3]; // 只有在值为undefined的时候才会执行f函数
+        console.log("x:",x);
+
+        console.log("*******************对象解构***************************************************")
+        let {q,w}={q:"11111", w:"222222"}
+        console.log("q:", q, "w:", w);// q: 11111 w: 222222
+
+        let {a1}={b:"333"} // 解构失败的值为undefined
+        console.log("a:",a1); // undefined
+
+        // 将现有对象的方法 赋值到某个变量
+        const { log } = console;
+        log('hello') // hello
+
+        // 修改属性名 将one属性名修改为first1
+        let {one: first1, two}={one:"1", two:"2"}
+        console.log("first:", first1);
+        // console.log("one:",one); // one is not defined
+        console.log("two:", two);
+
+        console.log("********************对象嵌套解构*************************************************")
+        let obj={
+            p:[
+                'Hello',
+                {y: 'word'}
+            ]
+        }
+        console.log('obj:',obj);
+        let {p:[x1,{y}]}=obj;
+        console.log('x:', x1); // x: Hello
+        console.log('y:',y); // y: word
+        // console.log('p:', p); // p is not defined; 这时p是模式，不是变量，因此不会被赋值。如果p也要作为变量赋值，可以写成下面这样。
+
+        let {p, p:[x2,{y: y2}]}=obj;
+        console.log('x2:', x2); // x2: Hello
+        console.log('y2:', y2); // y2: word
+        console.log('p:', p); //["Hello",{y: "word"}]
+
+
+        let obj1 = {};
+        let arr = [];
+        // 重命名对象中的属性名
+        ({ foo: obj1.prop, bar: arr[0] } = { foo: 123, bar: true });
+        console.log("obj:",obj1); // {prop: 123}
+        console.log("arr:",arr); // [true]
+
+
+        
+       // let {foo3: {bar}} = {baz: 'baz'}; // 报错 foo这时等于undefined，再取子属性就会报错
+       let {foo3: {bar}} = {foo3:{bar:'baz'}};
+       console.log('bar:',bar)
+
+
+       console.log("*******************将一个以声明的变量 用与解构赋值*********************************************");
+       let w1;
+       ({w1} = {w1:'333'}) // 将一个以声明的变量 用与解构赋值 需要使用(), 否则会报错
+       console.log("w1:", w1);
+
+
+       console.log([[1,2], [3,4]].map(([a,b])=>a+b)); // [3,7]
+
+       console.log("********************解构的用途****************************************************************************")
+       let x5=1;
+       let y5=2;
+       [x5, y5] = [y5, x5] // 1、交换变量的值
+       console.log("x5:", x5, "y5:", y5);
+
+        // 2、 从函数返回多个值
+        function aaa(){
+            return [1,2,3]
+        }
+        [z,x,c] = aaa()
+        console.log("z:",z,"x:",x,"c:",c);
+        function bbb(){
+            return{
+                dd:"11",
+                ff:"22"
+            }
+        }
+        let {dd:d6, ff} = bbb()
+        console.log("d6:", d6," ff:", ff); //d6: 11  ff: 22
+
+        // 3、提取JSON中的数据
+        let json={
+            id:42,
+            staus: false,
+            datas:[2,3,4]
+        }
+        let {id, staus, datas} = json
+        console.log("id:",id," status:", staus," datas:", datas) // id: 42  status: false  datas: (3) [2, 3, 4]
+
+        // 4、函数参数的默认值
+        // jQuery.ajax = function (url, {
+        //     async = true,
+        //     beforeSend = function () {},
+        //     cache = true,
+        //     complete = function () {},
+        //     crossDomain = false,
+        //     global = true,
+        //     // ... more config
+        // } = {}) {
+        //     // ... do stuff
+        // };
+    </script>
+</body>
+</html>

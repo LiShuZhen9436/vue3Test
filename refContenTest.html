@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>context</title>
+    <script src="./vue3.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script>
+    const app=Vue.createApp({
+        template:`<my-comp @change="childClick"></my-comp>`,
+        methods:{
+            childClick(){
+                console.log("点击事件")
+            }
+        }
+    })
+    app.component('my-comp',{
+        template:`<div @click="handleClick">child组件</div>`,
+        setup(props,context){
+            // slots插槽；emit；attrs 获取none-props 获取没有在props中接收，但父组件中传递了的props
+            const {attrs,emit,slots}=context;
+            function handleClick() {
+                emit("change")
+            }
+            return {handleClick}
+        }
+    })
+    app.mount("#root");
+</script>
+
+</html>

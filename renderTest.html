@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>render函数</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+
+    // 2、插件
+    const myPlugin={
+        install(app,options){
+            console.log("app:",app,"options:",options);
+            app.provide('personName','张三');
+            app.config.globalProperties.$sayHello="hellw word";
+        }
+    }
+
+
+
+    // 1、template -> render -> h-> 虚拟dom（js对象）->真实dom -> 展示到页面上面
+    const capp=Vue.createApp({
+        inject:['personName'],
+        data(){
+            return{
+                levels:2
+            }
+        },
+        mounted(){
+            console.log("获取插件注入personName:",this.personName)
+            console.log("获取插件注入的属性：", this.$sayHello)
+        },
+        template:`<div>
+                <my-components :levels="levels">Hellow word
+                </my-components>
+            </div>`
+    })
+
+    // 1、可以使用渲染函数实现和下面组件一样的功能，更加简洁
+    capp.component('my-components',{
+        props:["levels"],
+        // render渲染幻术 第一个参数是标签名，第二个参数可以写标签的属性，第三个显示内容
+        render(){
+            const {h}=Vue
+            return h('h'+this.levels,{},"hello word")
+        }
+    })
+    // 1、
+    // capp.component("my-components",{
+    //     props:["levels"],
+    //     template:`<div>
+    //                 <h1 v-if="levels===1"><slot/></h1>
+    //                 <h2 v-if="levels===2"><slot/></h2>
+    //                 <h3 v-if="levels===3"><slot/></h3>
+    //             </div>`
+    // })
+
+    // 2、
+    capp.use(myPlugin,{name:'传递的参数'})
+    capp.mount("#root");
+</script>
+
+</html>
