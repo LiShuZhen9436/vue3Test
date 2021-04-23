@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Persion(){
+            var b=0
+        }
+        Persion.prototype.a=5
+        console.dir(Persion)
+        var p1=new Persion()
+        console.log(p1)
+
+        /* ***************分隔符****************************** */
+        function Persion(name){
+            this.name=name
+        }
+        Persion.prototype.eat=function(){
+            console.log(this.name+"吃东西")
+        }
+        Persion.prototype.sleep=function(){
+            console.log(this.name+"睡觉")
+        }
+
+        function Student(name,school){
+            Persion.call(this,name)// 继承persion的属性，在，通过call执行Persion的构造函数
+            this.school=school
+        }
+        // 继承方法 (类都是定义在proptype中的，所以直接备份prototype即可)
+        Student.prototype= Object.create(Persion.prototype)
+        Student.prototype.constructor=Student // 必须的，否则constructor会指向Persion构造函数
+        // 新添加的方法要放在赋值后面，否则会被覆盖掉。
+        Student.prototype.write=function(){
+            console.log(this.name, "在", this.school,"写作业")
+        }
+        var s2=new Student('张灯', '111高中')
+        s2.write()
+
+        // 修改指向
+        Student.prototype=new Persion()
+        var s1=new Student("zx","高中")
+        s1.eat()
+        s1.sleep() 
+        console.dir(Student)
+        console.log(s1)
+    </script>
+</body>
+</html>

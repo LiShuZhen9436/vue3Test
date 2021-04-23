@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数</title>
+</head>
+<body>
+    <script>
+        let getSum1=(...values)=>{
+            console.log(values)
+            /* 箭头函数中没有this arguments只能使用命 名参数，也不能使用
+                super 和 new.target也不能用做构造函数，箭头函数也没有proptype属性
+
+            */
+            // console.log('arg:',arguments);
+            return values.reduce((pre,cur)=>pre+cur,0);
+        }
+        getSum1(1,2,3)
+
+        function King(){
+            if(new.target){ // 不是使用new返回undefined 是则调用构造函数
+                console.log("通过New调用当前函数！")
+            }else{
+                console.log("普通函数调用")
+            }
+        }
+
+        (function(){
+            let name="";
+            Person=function(val){
+                name=val; // this.name
+            }
+            Person.prototype.getName=function(){
+                return name;//// this.name
+            }
+            Person.prototype.setName=function(value){
+                name=value;//// this.name
+            }
+        })()
+        let person1=new Person('张三');
+        console.log('111:',person1.getName());
+        person1.setName('李四');
+        console.log('222:',person1.getName());
+
+        let person2=new Person('王五');// 每次修改name都会把所有实例的name修改掉，可以使用this.name每个实例的name不受影响
+        console.log("333:",person2.getName());
+        console.log('person1Name:',person1.getName());
+    </script>
+</body>
+</html>

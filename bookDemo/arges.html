@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数的扩展参数</title>
+</head>
+<body>
+    <script>
+        // let values=[1,2,3,4,5];
+        // function getSum(){
+        //     console.log('arguments:',arguments)
+        //     let sum=0;
+        //     for(let i=0;i<arguments.length;i++){
+        //         console.log('every:',arguments[i])
+        //         sum+=arguments[i];
+        //     }
+        //     return sum;
+        // }
+        // console.log(getSum(values));
+        // console.log(getSum.apply(null,values))
+
+        // console.log(getSum(...values));
+
+        // function getSum1(...values){
+        //     console.log('values:',values);
+        //     console.log('arg:',arguments[1]);
+        //     return values.reduce((pre,cur)=>pre+cur,0);
+        // }
+        let getSum1=(...values)=>{
+            console.log(values)
+            /* 箭头函数中没有this arguments只能使用名明参数，也不能使用
+                
+
+            */
+            // console.log('arg:',arguments);
+            return values.reduce((pre,cur)=>pre+cur,0);
+        }
+        getSum1(1,2,3)
+    </script>
+</body>
+</html>

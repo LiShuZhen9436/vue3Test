@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>混入</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+    // 声明周期函数 先执行mixin里面的 再执行组件里面的
+    // 自定义的属性，组件中的属性优先级高于mixin属性的优先级
+    const myMixin={ // 这里定义的是局部混入，可以使用app.mixins定义全局混入，定义全局混入后所有的组件都会有混入中定义的属性或者方法
+        created(){
+            console.log("混入生命周期")
+        },
+        number:1
+    }
+    let app=Vue.createApp({
+        mixins:[myMixin],
+        number:2, // 直接声明的属性值可以使用$options获取,
+        created(){
+            console.log("vue根组件生命周期！")
+        },
+        mounted(){
+            console.log('number:',this.$options.number)
+        },
+        template:`<div>{{this.$options.number}}</div>`
+    })
+
+    // 修改mixin和组件的优先级  修改为mixin的优先级大于组件的优先级
+    app.config.optionMergeStrategies.number=(mixinValue,appValue)=>{
+        return mixinValue || appValue
+    }
+
+    app.mount("#root")
+</script>
+
+</html>
