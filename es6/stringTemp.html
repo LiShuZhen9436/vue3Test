@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>字符串模板</title>
+    <title>字符串模板、字符串操作方法、解构赋值、...扩展运算符</title>
 </head>
 <body>
     <script>
+        console.log("***********************字符串模板**************************************************")
         const temp=(datas)=>{
             let ff=`<table>
                 ${
@@ -41,24 +42,81 @@
        tag `Hello ${a+b} Word ${a*b}`
 
 
-
+       console.log("********************字符串操作方法**************************************")
        // 字符串操作方法
        let str="hello Word";
-       console.log("str:", str.indexOf("o"));
-       console.log("str1:", str.includes("W"));
+       console.log("str:", str.indexOf("o")); // 4 返回第一个检索到字符的索引 
+       console.log("str1:", str.includes("W")); // true 检索到第一个匹配字符返回true
        console.log("开始：", str.startsWith("h"));// 返回bool类型的值 判断字符串是否是以 h 开头
-       console.log("结束：", str.endsWith("d"));
+       console.log("结束：", str.endsWith("d"));// 返回bool类型的值 判断字符串是否是以 d 结尾
 
        let ary=["q", "w", "e", "r", "t"];
        console.log("数组截取：", ary.indexOf("w"));
        console.log("包含：", ary.includes("r"))
 
-       // repeat()
+       // repeat() 重复
        console.log('f'.repeat(5)); // 返回一个新字符串
 
+       // replace 替换
        console.log('aabbcc'.replace('b', '_')); // 字符串替换 只匹配查找到的第一个 返回新字符串不改变原来的字符串
        console.log('aabbcc'.replace(/b/g, '_')); // 替换所有匹配到的字符
        console.log('aabbcc'.replaceAll('b', '_')); // es2021 新增的替换所有字符  返回新字符串不改变原来的字符串
+
+
+       console.log("********************函数 参数 解构****************************************");
+       function m1({x=0,y=0}={}){
+           console.log([x, y])
+       }
+       function m2({x, y} = {x: 0, y: 0}){
+           console.log([x, y])
+       }
+       m1({x:2, y:3});
+       m2({x:2, y:3});
+       m1({});// [0, 0]
+       m2({}); // [undefined, undefined]
+       m1();//[0, 0]
+       m2();//[0, 0]
+       m1({undefined, y:8})
+       m2({undefined, y:8})
+
+       function foo(val1=undefined){ // 将参数默认值设为undefined，表明这个参数是可以省略的
+           console.log("val1:",val1);
+       }
+       foo(11)
+       foo()
+
+        console.log("*************************箭头函数***************************************")
+        let fun=val=>val; // 相当与let fun=function(val){return val}
+        console.log("构造函数fun返回值：", fun(222))
+        let fun1=()=>void 1;
+        console.log(fun1())
+
+        // function Timer() {
+        //     this.s1 = 0;
+        //     this.s2 = 0;
+        //     // 箭头函数
+        //     setInterval(() => this.s1++, 1000);
+        //     // 普通函数
+        //     setInterval(function () {
+        //         console.log("this:", this);
+        //         console.log("s2@@@:", this.s2++);
+        //         this.s2++;
+        //     }, 1000);
+        // }
+
+        // var timer = new Timer();
+        // setTimeout(() => console.log('s1: ', timer.s1), 3100);
+        // setTimeout(() => console.log('s2: ', timer.s2), 3100);
+
+
+        function aFun(){
+            bFun();
+        }
+        function bFun() {
+            console.log("bbbbb");
+        }
+        aFun();
+
     </script>
 </body>
 </html>

@@ -20,7 +20,7 @@
         let [first, second, third, fourth, fifth, sixth] = fibs();
         console.log('sixth:',sixth);
 
-        // 解构赋值使用默认值 （ **只有数组成员严格等于undefined, 默认值才会生效）
+        // 解构赋值使用默认值 （ **只有数组成员赋值严格等于undefined, 默认值才会生效）
         let [foo=true]=[undefined]
         console.log("foo:",foo); // true
 
@@ -35,7 +35,7 @@
             return "aaaa"
         }
         let [x=f()]=[3]; // 只有在值为undefined的时候才会执行f函数
-        console.log("x:",x);
+        console.log("x:",x); // x: 3
 
         console.log("*******************对象解构***************************************************")
         let {q,w}={q:"11111", w:"222222"}
@@ -50,9 +50,9 @@
 
         // 修改属性名 将one属性名修改为first1
         let {one: first1, two}={one:"1", two:"2"}
-        console.log("first:", first1);
+        console.log("first:", first1); // first: 1
         // console.log("one:",one); // one is not defined
-        console.log("two:", two);
+        console.log("two:", two); // two: 2
 
         console.log("********************对象嵌套解构*************************************************")
         let obj={
@@ -84,7 +84,7 @@
         
        // let {foo3: {bar}} = {baz: 'baz'}; // 报错 foo这时等于undefined，再取子属性就会报错
        let {foo3: {bar}} = {foo3:{bar:'baz'}};
-       console.log('bar:',bar)
+       console.log('bar:',bar); // bar: baz
 
 
        console.log("*******************将一个以声明的变量 用与解构赋值*********************************************");

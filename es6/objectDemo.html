@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6 对象扩展</title>
+</head>
+<body>
+    <script>
+        // es6 允许在大括号里面直接写入变量和函数，作为对象的属性或方法
+        const foo='bar';
+        let baz={foo}; // 变量foo直接写在大括号里面。这时，属性名就是变量名, 属性值就是变量值
+        console.log('baz:', baz); // {foo: "bar"}
+
+
+        function f(x, y){
+            return {x, y}
+        }
+        let res = f(1, 2);
+        console.log('res:', res); // {x: 1, y: 2}
+
+
+        // 实例  只要时放在大括号{}里面的会自定识别键值
+        let brith = '2021/04/22';
+        let person = {
+            name: '张三',
+            // 相当于brith: brith
+            brith,
+            /* 相当于
+            getName：function () {
+                console.log('名字：', this.name)
+                return this.name
+            }
+            */
+            getName(){ // 简写不能当作构造函数使用
+                console.log('名字：', this.name)
+                return this.name
+            }
+        }
+        console.log('person:', person);
+
+
+        // 属性的赋值器（setter）和取值器（getter），事实上也是采用这种写法
+        const cart = {
+            _wheels: 4,
+
+            get wheels () {
+                return this._wheels;
+            },
+
+            set wheels (value) {
+                if (value < this._wheels) {
+                throw new Error('数值太小了！');
+                }
+                this._wheels = value;
+            }
+        }
+        console.log('cart:', cart);
+
+
+        // 简洁写法在打印中的应用
+        let name = '张三'
+        let user={
+            name
+        }
+        let bar= {
+            baz: "111"
+        }
+        console.log(user, bar);
+        console.log({user, bar});
+
+
+        console.log("*******************super 关键字****************************")
+        const proto = {
+            name: '122'
+        }
+        const obj = {
+            name: '张三',
+            find(){
+                return super.name
+            }
+        }
+        Object.setPrototypeOf(obj, proto);
+        console.log('值：', obj.find());
+
+        let obj2 = {a:{b:1}};
+        let cc={...obj2};
+        console.log("cc:", cc);
+
+
+        // ** 扩展运算符的解构赋值，不能复制继承自原型对象的属性
+        const o = Object.create({x: 1, y: 2})
+        o.z=3;
+        console.log('o:', o);
+        // const o2 = {
+        //     x: 1,
+        //     y: 2,
+        //     z: 3
+        // }
+        // console.log('o2:',o2);
+        // let b = new Object(o2);
+        // console.log('b:', b);
+        let {x, ...newObj} = o;
+        console.log('x:', x);
+        console.log('newObj:', newObj); // {z: 3} newObj中没有y的值，因为y的值在原型上，解构赋值不能继承原型对象上的属性，而x有值是因为x单纯的属于解构赋值
+        let {y, z} = newObj;
+        console.log('y:', y, 'z:', z); // y: undefined z: 3
+
+        // 解决不能克隆原型对象上面的属性问题
+        const clone=Object.assign(
+            Object.create(Object.getPrototypeOf(o)), // 赋值 __proto__ 上面的属性
+            o
+        )
+        console.log('克隆：', clone);
+
+
+        let a={
+            name: "张三"
+        }
+        let b= {...a, age: 24, sex: '女'}
+        console.log('b:', b);
+
+
+        console.log('**********************链式判断运算符**********************************');
+        let message={
+            body:{
+                user:{
+                    firstName: "李四"
+                }
+                ,
+                // fun() {
+                //     console.log('执行fun方法！');
+                // }
+            }
+        }
+        // console.log('获取name属性：', message.body.user.firstName); // 这个当某属性不存在时会导致报错所 以正确的写法如下：
+        const firstName = (message && message.body && message.body.user && message.body.user.firstName) || 'defaule';
+        console.log('firstName:', firstName);
+
+        // es2020 新增 链判断运算符
+        const firstName1 = message?.body?.user?.firstName || 'default';
+        console.log('firstName1:', firstName1);
+
+        console.log('调用方法：', message?.body?.fun?.()); // 链式运算符判断有方法则执行 否则返回underfine
+
+        // 还可以判断是否包含指定的方法
+        if (message?.body?.fun?.() === undefined) {
+            console.log('失败！')
+        } else {
+            console.log('成功！')
+        }
+
+
+        console.log("*********************NUll判断运算符***********************************************");
+        /* ?? 当前面的表达式为null或underfine时 则执行 ?? 后面的代码； 否则不执行 */
+        const headerText = 0; // undefined; // null; // '';
+        console.log(headerText || "没值赋予新值"); // 上面这种普通指定默认值方式 当为 0，undefined，null，''的时候都会被赋值为默认值
+
+        // es2020 引入了新的判断方式 只有值为null或underfine时才会执行
+        const headerText1 = '' // null; // undefined; //0;
+        console.log('??测试', headerText1 ?? "没值赋予新值");
+
+        // message.body 为null或underfine；message.fun 为null或underfine时都会返回默认值300
+        const bbb = message?.body?.fun ?? 300;
+        console.log('链式运算符和null判断运算符结合使用：', bbb);
+
+
+        console.log("******************************对象的新增方法******************************************************");
+        // Object.is() 比较两个值是否相等
+        let cp = Object.is('foo', 'foo');
+        console.log('cp:', cp); // true
+
+        console.log( Object.is({}, {}) ); // false
+        console.log( Object.is(+0, -0) );// false
+        console.log( Object.is(NaN, NaN) ); // true
+
+        /*
+           Object.assign() 用于对象的合并  第一个参数是目标对象 后面的参数都是源对象
+           Object.assign()拷贝的属性是有限制的，只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（enumerable: false）
+        */
+        let aa1 = {
+            a: 1
+        }
+        let bb1= {
+            b: 2
+        }
+        let cc2 = {
+            c2: 6
+        }
+        let endObj = Object.assign(aa1, bb1, cc2); // 合并到aa1中
+        console.log('endObj:', endObj); // {a: 1, b: 2, c2: 6}
+
+        console.log(Object.assign(bb1)); // {b: 2}
+
+        console.log(Object.assign(2));
+
+        const target = { a: { b: 'c', d: 'e' } }
+        const source = { a: { b: 'hello' } }
+        let endData = Object.assign(target, source); // source中的a会把target中的a替换掉
+        console.log('endData:', endData);
+
+    </script>
+</body>
+</html>

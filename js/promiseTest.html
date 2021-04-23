@@ -24,7 +24,7 @@
                 console.log("第三个Promise then 方法获取结果",res3)
             })
             .catch(err=>{
-                console.log("error:", eroor)
+                console.log("error:", err)
             })
 
             // 并行执行多个异步方法
@@ -54,7 +54,7 @@
             },20000)
 
             async function b(){
-               let b= await Promise.all([yb1({}),yb({}),yb3({})])
+               let b= await Promise.all([yb1({}),yb({}),yb3({})]); // 并行执行多个异步函数
                console.log("b:",b)
             }
         }

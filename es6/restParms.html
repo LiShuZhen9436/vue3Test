@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rest参数 和 扩展运算符</title>
+</head>
+<body>
+    <script>
+       console.log("**********************...rest参数*******************************************");
+       function add(...values) { // 如果不是用... 需要写多个参数接收，或者使用arguments对象
+           console.log("参数：", values);// [1, 2, 3, 4]
+       }
+       add(1,2,3,4); // [1, 2, 3, 4]
+       add(['a','b','c','d','e'],1); // [["a", "b", "c", "d", "e"], 1]
+
+       // function f(a, ...b, c) { // 报错 ...b只能是最后的参数 否则会报错； 和解构一样如果解构中包含默认值，则.length不包括它；有扩展运算符时长度不包括扩展运算符的长度
+       //   // ...
+       // }
+       // f()
+
+       console.log("**********************扩展运算符***********************************************")
+       console.log(...[1,2,3]); // 1 2 3
+
+       console.log(1, ...[2,4,7], 9); // 1 2 4 7 9
+
+       function add1(x, y){
+           return x+y;
+       }
+       let number = [2,5];
+       console.log(...number); // 2, 5
+       let res = add1(...number);
+       console.log(res); // 7
+
+       function push(arry, ...items){
+           console.log("arry:", arry, "items:", items);
+           console.log("...item:", ...items);
+           arry.push(...items);
+           console.log("arry:", arry);
+       }
+       push([8,99], 1,2,3); // [8, 99, 1, 2, 3]
+       push([8,99], [1,2,3]); // [8, 99,[1, 2, 3]]
+
+       // 扩展参数和常规参数结合使用
+       function jie(x,y,z,a,b){
+           console.log('结果：', x,y,z,a,b); // 结果： 1 2 3 4 5
+       }
+       jie(1,2,...[3,4],5)
+
+       console.log(...[], 1); // 1 扩展运算符后面是一个空数组，则不产生任何效果
+
+       // 使用apply将数组转为函数的普通参数
+       function ff(x,y,z){
+          console.log('x:', x, 'y:', y, 'z:', z)
+       }
+       let arg=[1,2,3]
+       ff.apply(null, arg);
+       ff(...arg); // 使用扩展运算符转换
+
+       // 求最大值
+       let max=Math.max(17,9,34); // 普通调用
+       console.log('max:', max);
+
+       let max1=Math.max.apply(null, [17,9,34]) // 使用apply解构函数
+       console.log('max1:', max1);
+
+       let max2=Math.max(...[17,9,34]); // 使用扩展运算符求最大值
+       console.log('max2:', max2);
+       
+       // 合并数组 concat和...都属于浅拷贝
+       let aa=[1,2];
+       let bb=[3,4];
+       let cc=[5,6];
+       let newAry=aa.concat(bb, cc); // es5 方法合并数组
+       console.log('newAry:', newAry);
+       let newAry1=[...aa, ...bb, ...cc]; // es6 方法合并数组
+       console.log('newAry1:', newAry1);
+
+       // 扩展运算符用于数组赋值，只能放在参数的最后一位，否则会报错
+       // const [...butLast, last] = [1, 2, 3, 4, 5];
+        // 报错
+       // const [first, ...middle, last] = [1, 2, 3, 4, 5];
+
+
+    </script>
+</body>
+</html>

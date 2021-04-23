@@ -49,7 +49,7 @@
         var obj={
             "b":666
         }
-        a.call(obj)
+        a.call(obj); // 箭头函数的this指向声明时所在的作用域，不能通过apply，bind等修改
     </script>
 </body>
 </html>

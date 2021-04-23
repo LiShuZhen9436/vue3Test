@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实现三角形</title>
+</head>
+<style>
+    .border{
+        width: 0px;
+        height: 0px;
+        /* border: 2px solid; */
+        border: 50px solid; /* 边框为50px 白色区域为宽高(width:50;height:50) */
+        /* border-color: blue red blueviolet black; */
+        border-color: transparent transparent blue transparent; /* 只显示箭头向下的三角形 */
+        position: relative;
+    }
+    .border::after{ /* 可以模拟一个空心三角形 */
+        content: '';
+        border-style: solid;
+        border-width: 0 40px 40px;
+        border-color: transparent transparent red;
+        position: absolute;
+        top: 6px;
+        left: -40px;
+    }
+
+    .border2{ /* 可以实现直角三角形 */
+        /* width: 50px;
+        height: 50px;
+        border: 30px solid;
+        border-color: blue blueviolet brown black; */
+
+        width: 0px;
+        height: 0px;
+        border-top: blue solid;
+        border-right: red solid; /* transparent solid */
+        border-width: 50px;
+    }
+</style>
+<body>
+    <div class="border"></div>
+
+    <!-- 分隔符标签 -->
+    <div style="height: 30px;width: 100%"></div>
+
+    <div class="border2"></div>
+</body>
+</html>
