@@ -67,7 +67,7 @@
         let bar= {
             baz: "111"
         }
-        console.log(user, bar);
+        console.log({user, bar}); // {user: {name: "张三"}, bar: {baz: "111"}}
         console.log({user, bar});
 
 
@@ -82,7 +82,7 @@
             }
         }
         Object.setPrototypeOf(obj, proto);
-        console.log('值：', obj.find());
+        console.log('值：', obj.find()); // 122
 
         let obj2 = {a:{b:1}};
         let cc={...obj2};
@@ -102,7 +102,7 @@
         // let b = new Object(o2);
         // console.log('b:', b);
         let {x, ...newObj} = o;
-        console.log('x:', x);
+        console.log('x:', x); // 1
         console.log('newObj:', newObj); // {z: 3} newObj中没有y的值，因为y的值在原型上，解构赋值不能继承原型对象上的属性，而x有值是因为x单纯的属于解构赋值
         let {y, z} = newObj;
         console.log('y:', y, 'z:', z); // y: undefined z: 3

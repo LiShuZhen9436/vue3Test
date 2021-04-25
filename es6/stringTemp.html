@@ -76,8 +76,8 @@
        m2({}); // [undefined, undefined]
        m1();//[0, 0]
        m2();//[0, 0]
-       m1({undefined, y:8})
-       m2({undefined, y:8})
+       m1({undefined, y:8});// [0, 8]
+       m2({undefined, y:8});// [undefined, 8]
 
        function foo(val1=undefined){ // 将参数默认值设为undefined，表明这个参数是可以省略的
            console.log("val1:",val1);

@@ -30,9 +30,9 @@
         // }
         let getSum1=(...values)=>{
             console.log(values)
-            /* 箭头函数中没有this arguments只能使用名明参数，也不能使用
-                
-
+            /*  箭头函数中没有this arguments只能使用命名参数，
+                也不能使用new ，也就是说不可以当做构造函数使用
+                箭头函数中this的指向不可以通过bind，apply等改变，始终指向声明时所在的作用域
             */
             // console.log('arg:',arguments);
             return values.reduce((pre,cur)=>pre+cur,0);
