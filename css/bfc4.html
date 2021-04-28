@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bfc 元素的margin-left与其包含块的border-left相接触</title>
+</head>
+<style>
+    *{
+        margin: 0;
+    }
+    .outside{
+        background-color: chocolate;
+    }
+    .inside{
+        width: 200px;
+        height: 200px;
+        background-color: burlywood;
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+</style>
+<body>
+    <div class="outside">
+        <div class="inside"></div>
+    </div>
+</body>
+</html>

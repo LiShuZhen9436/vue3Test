@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFC margin</title>
+</head>
+<style>
+    .self{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* 示例二 */
+    .bfc{
+        background-color: blue;
+        margin:40px;
+        /* overflow: hidden; 生成bfc */
+    }
+    .div1{
+        background-color: brown;
+        margin: 20px;
+        width: 100px;
+        height: 100px;
+    }
+    .div2{
+        background-color: chartreuse;
+        margin: 20px;
+        width: 100px;
+        height: 200px;
+    }
+
+    .kong{
+        /* 没有border或者height时会进行边框合并 */
+        margin: 80px;
+        /* border: 1px solid #000; */
+    }
+</style>
+<body>
+    <!-- 示例1 -->
+    <div class="self"></div>
+
+    <!-- 示例2 -->
+    <div class="bfc">
+        <div class="div1"></div>
+    </div>
+
+    <div class="kong"></div>
+
+    <!-- <div style="overflow: hidden;"> 生成bfc -->
+        <div class="div2"></div>
+    <!-- </div> -->
+</body>
+</html>

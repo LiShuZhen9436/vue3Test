@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组 filter</title>
+</head>
+<body>
+    <script>
+        /* 
+            1、filter 返回一个新数组
+            2、属于浅拷贝
+            3、不支持break continue
+        */
+        let bilAry=['a','b','c','d','e','f','g','h',{'k':'55'}];
+        let f = bilAry.filter((item,index,ary)=>{ // 返回新数组
+            // console.log(' item:',item,' index:',index,' ary:',ary)
+            // if(index === 8) {item.k="888";return item}
+            // if (index === 3) {
+            //     break
+            // }
+            if (index===2) {
+                return '8888'
+            }
+            // return item
+        })
+        console.log('filter遍历数组:',f);
+        console.log('原数组：', bilAry);
+
+        // 模拟filter实现
+        Array.prototype.myFilter = function (fn) {
+            console.log('fn:', fn)
+            // this 是函数调用者
+            let outAry = []
+            for(let i=0;i<this.length;i++){
+                fn(this[i]) && outAry.push(this[i])
+            }
+            return outAry
+        }
+        let aaa= bilAry.myFilter((item)=>{
+            return item
+        })
+        console.log('aaa:', aaa)
+    </script>
+</body>
+</html>

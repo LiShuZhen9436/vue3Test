@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组 for of</title>
+</head>
+<body>
+    <script>
+        /*
+            1、可以正确响应break、continue
+            2、实现原理是使用的 迭代器 + while 循环
+        */
+        let bilAry=['a','b','c','d','e','f','g','h',{'k':'55'}];
+        for(val of bilAry){
+            console.log(val)
+            if (val === 'g'){break}
+        }
+
+        for(val of bilAry.keys()){ // 遍历数组的键
+            if (val === 3) {
+                break
+            }
+            console.log('for-of keys 遍历键:',val);// 0,1,2,3,4,5,6,7,8
+        }
+        for(val of bilAry.values()){ // 遍历数组的值
+            console.log('for-of values 遍历键:',val);// a,b,c,d,e,f,g,h,{'k':'55'}
+        }
+        for(val of bilAry.entries()){ // 遍历数组的key value
+            console.log('for-of values 遍历键:',val);// [0, "a"],[1, "b"],[2, "c"].....[8, {…}]
+        }
+
+        let i=0;
+
+    </script>
+</body>
+</html>

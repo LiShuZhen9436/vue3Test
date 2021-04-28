@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组增加删除</title>
+</head>
+<body>
+    <script>
+        console.log('****************数组添加移除项********************************')
+        let array=['1','2','3','4','5']
+        let len=array.push('6') // 向数组末尾添加项 并返回数组的长度
+        console.log("在数组末尾添加数组 并返回数组的长度：",len)
+        console.log('array:',array)
+
+        let ary1=array.pop(); // 从数组末尾移除数据 并返回移除的值
+        console.log('从数组末尾移除项 ary1:',ary1)
+        console.log('ary:',array)
+
+        let ary2=array.shift(); // 从数组头部移除数据 并返回移除的值
+        console.log('从数组头部移除数据 ary2:',ary2);
+        console.log('ary:', array);
+
+        let ary3=array.unshift("p"); // 从数组头部添加数据 并返回数组的长度
+        console.log('在数组头部添加项 arry3:',ary3)
+        console.log('ary:',array); // ["p", "2", "3", "4", "5"]
+
+        console.log("***********************数组截取**********************************")
+
+        // 数组截取
+        let nAry = ['aa','b','cc','dd','ggg','hhhh'];
+
+        let scliceAry = nAry.slice(1,4); // 数组截取 第一个参数截取的开始位置 第二个参数截取的结束位置 ["b", "cc", "dd"] 没有返回空数组
+        console.log('scliceAry:',scliceAry);
+        console.log('nary:',nAry);
+
+        
+        console.log("***********************字符串截取****************************")
+        let v="fffghkll;;o"
+        let substringAry=v.substring(2,5); // substring字符串的截取方法 第一个参数开始位置 第二个参数结束位置 返回截取到的字符串 fgh
+        console.log("substring 截取返回值：",substringAry)
+
+        let subStr=v.substr(3,1); // 截取字符串 第一个参数时起始位置 第二个参数是字符串的长度
+        console.log('subStr:',subStr);
+    </script>
+</body>
+</html>

@@ -7,53 +7,66 @@
 </head>
 <body>
     <script>
-        console.log('****************数组添加移除项********************************')
-        let array=['1','2','3','4','5']
-        let len=array.push('6') // 向数组末尾添加项 并返回数组的长度
-        console.log("在数组末尾添加数组 并返回数组的长度：",len)
-        console.log('array:',array)
-
-        let ary1=array.pop(); // 从数组末尾移除数据 并返回移除的值
-        console.log('从数组末尾移除项 ary1:',ary1)
-        console.log('ary:',array)
-
-        let ary2=array.shift(); // 从数组头部移除数据 并返回移除的值
-        console.log('从数组头部移除数据 ary2:',ary2);
-        console.log('ary:', array);
-
-        let ary3=array.unshift("p"); // 从数组头部添加数据 并返回数组的长度
-        console.log('在数组头部添加项 arry3:',ary3)
-        console.log('ary:',array); // ["p", "2", "3", "4", "5"]
-
-        console.log("***********************数组截取**********************************")
-
-        // 数组截取
-        let nAry = ['aa','b','cc','dd','ggg','hhhh'];
-
-        let scliceAry = nAry.slice(1,4); // 数组截取 第一个参数截取的开始位置 第二个参数截取的结束位置 ["b", "cc", "dd"] 没有返回空数组
-        console.log('scliceAry:',scliceAry);
-        console.log('nary:',nAry);
+       
 
         console.log("*********************数组遍历**********************************")
-        // 数组遍历
         let bilAry=['a','b','c','d','e','f','g','h',{'k':'55'}];
-        let q = bilAry.forEach((item,index,ary)=>{ // forEach 遍历没有返回值
+        /* 
+            forEach 1、遍历没有返回值  2、不能使用return break continue 退出;使用return遍历还是会继续执行，使用break continue报错
+        */
+        let q = bilAry.forEach((item,index,ary)=>{
             // console.log(' item:',item,' index:',index,' ary:',ary);
+            // console.log('index:', index)
+            // if (index === 3) {
+            //     console.log('@@@@@@@@@@@@@@')
+            //     continue
+            // }
         })
         console.log('q:',q)
 
+        var addd = [1,2,3,4,5]
+        addd.forEach((item, index, ary) => {
+            item = item * 2
+            console.log('item:', item)
+        })
+        console.log(addd)
+
         console.log('-------------------map遍历---------------------------------')
-        let w = bilAry.map((item,index,ary)=>{ // map 遍历数组 返回一个新数组  如果数组对象只有一层引用不会改变原数组，有多层时会改变原数组对象 属于浅拷贝
+        /*
+            map 1、遍历数组 返回一个新数组  
+                2、如果数组对象只有一层引用不会改变原数组，有多层时会改变原数组对象 属于浅拷贝
+        */
+        let bilAry1=['a','b','c','d','e','f','g','h',{'k':'55'}];
+        let w = bilAry1.map((item,index,ary)=>{ // map 使用break continue报错
             console.log(' item:',item,' index:',index,' ary:',ary);
             if(index ===8) {
                 item.k="666"
-            } else{
+                return
+            } 
+            else{
                 item = item+'1';
             }
-            return item;
         })
         console.log('w:',w)
-        console.log('bilAry:',bilAry)
+        console.log('bilAry:',bilAry1)
+
+        /* **************模拟map源码****************** */
+        // var arr = [1, 2, 3, 4, 5]
+        // Array.prototype.myMap = function(fn){
+        //     var len = this.length
+        //     //创建新数组
+        //     var arr = [];
+        //     for(var i = 0; i < len; i ++){
+        //         // let aa = fn(this[i],i) // 回调函数的执行结果
+        //         arr.push(fn(this[i],i))
+        //     }
+        //     return arr
+        // }
+        // var aa = arr.myMap(function(ele, index){
+        //     return ele * 2
+        // })
+        // console.log(aa)
+        /* **************模拟map源码 end****************** */
 
         console.log('-----------------------for of 遍历---------------------------------')
         for(val of bilAry){ // 可以正确响应break、continue
@@ -174,16 +187,6 @@
             // return (val>7) // -1
         })
         console.log('findIndex返回数据：',r)
-
-
-        console.log("***********************字符串截取****************************")
-        let v="fffghkll;;o"
-        let substringAry=v.substring(2,5); // substring字符串的截取方法 第一个参数开始位置 第二个参数结束位置 返回截取到的字符串 fgh
-        console.log("substring 截取返回值：",substringAry)
-
-        let subStr=v.substr(3,1); // 截取字符串 第一个参数时起始位置 第二个参数是字符串的长度
-        console.log('subStr:',subStr);
-
 
     </script>
 </body>

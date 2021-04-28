@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行内元素maargin padding</title>
+</head>
+<style>
+    /*
+        行内元素：margi-left,margin-right有效
+        margin-top,margin-bottom无效
+        padding-left，padding-right有效
+        padding-top,padding-bottom看上去有效，但其实设置的是无效的，不会对周围元素产生影响
+    */
+    span{
+        background-color: brown;
+        margin: 10px;
+        padding: 30px;
+    }
+</style>
+<body>
+    <span>我是span标签</span>
+    <div>我是div</div>
+</body>
+</html>
