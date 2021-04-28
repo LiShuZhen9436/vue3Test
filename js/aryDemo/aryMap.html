@@ -12,6 +12,7 @@
             map 
             1、遍历数组 返回一个新数组  
             2、如果数组对象只有一层引用不会改变原数组，有多层时会改变原数组对象 属于浅拷贝
+            3、arry中添加的是回调函数的执行结果；与filter不同； 不管回调函数的return结果是什么都会向arr数组中添加回调函数返回的值
         */
         let bilAry1=['a','b','c','d','e','f','g','h',{'k':'55'}];
         let w = bilAry1.map((item,index,ary)=>{ // map 使用break continue报错
@@ -35,7 +36,7 @@
             for(var i = 0; i < len; i ++){
                 // let aa = fn(this[i],i) // map回调函数的执行结果
                 console.log('DDD:', fn(this[i],i))
-                arr.push(fn(this[i],i))
+                arr.push(fn(this[i],i)) // 不管回调函数的return结果是什么都会向arr数组中添加回调函数返回的值
             }
             return arr
         }

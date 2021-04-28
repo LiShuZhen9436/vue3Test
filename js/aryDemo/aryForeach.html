@@ -13,6 +13,7 @@
             forEach
             1、遍历没有返回值  
             2、不能使用return break continue 退出;使用return遍历还是会继续执行，使用break continue报错
+            3、属于浅拷贝
         */
         let q = bilAry.forEach((item,index,ary)=>{
             // console.log(' item:',item,' index:',index,' ary:',ary);
@@ -21,8 +22,12 @@
             //     console.log('@@@@@@@@@@@@@@')
             //     continue
             // }
+            if(index ===8) { // 会修改原数组的值
+                item.k="568"
+            } 
         })
         console.log('q:',q)
+        console.log('forEach后的原数组:',bilAry)
 
         var addd = [1,2,3,4,5]
         addd.forEach((item, index, ary) => {
@@ -30,6 +35,13 @@
             console.log('item:', item)
         })
         console.log(addd);// 不会改变原数组
+
+        // foreach实现原理
+        Array.prototype.for_Each = function (fn) {
+            for (var i = 0; i < this.length; i++) {
+                fn(this[i], i)
+            }
+        }
     </script>
 </body>
 </html>

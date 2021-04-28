@@ -12,6 +12,7 @@
             1、filter 返回一个新数组
             2、属于浅拷贝
             3、不支持break continue
+            4、向新数组添加的是数组遍历的项不是回调函数执行的结果；与map不同 调用myFilter回调函数并传参 回调函数有返回值时才向数组中push当前item 所以新数组中不会有underfine 只包含符合条件的值
         */
         let bilAry=['a','b','c','d','e','f','g','h',{'k':'55'}];
         let f = bilAry.filter((item,index,ary)=>{ // 返回新数组
@@ -34,12 +35,16 @@
             // this 是函数调用者
             let outAry = []
             for(let i=0;i<this.length;i++){
-                fn(this[i]) && outAry.push(this[i])
+                console.log('111', fn(this[i], i))
+                fn(this[i], i) && outAry.push(this[i]) // 调用myFilter回调函数并传参 回调函数有返回值时才向数组中push当前item 所以新数组中不会有underfine只包含符合条件的值
             }
             return outAry
         }
-        let aaa= bilAry.myFilter((item)=>{
-            return item
+        let aaa= bilAry.myFilter((item, index)=>{
+            if (index===2) {
+                return '8888' // 不管return什么值新数组中都是返回的当前item
+            }
+            // return item
         })
         console.log('aaa:', aaa)
     </script>
