@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6 WeakSet数据结构</title>
+</head>
+<body>
+    <script>
+        /*
+            WeakSet 和 Set 类似 也是不允许有重复项，但是于Set有两个区别
+            1、WeakSet 的成员只能是对象，不能是其他类型的值
+            2、 WeakSet 是弱类型 即垃圾回收机制不考虑 WeakSet 对该对象的引用，
+                也就是说，如果其他对象都不再引用该对象，那么垃圾回收机制会自动回收该对象所占用的内存，
+                不考虑该对象还存在于 WeakSet 之中
+            3、作为构造函数，WeakSet 可以接受一个数组或类似数组的对象作为参数。
+              （实际上，任何具有 Iterable 接口的对象，都可以作为 WeakSet 的参数。）该数组的所有成员，都会自动成为 WeakSet 实例对象的成员
+            4、weakSet 没有size属性，也不能forEach因为他是弱类型
+        */
+    
+        let ws = new WeakSet([[1,2], [2,3]]);
+        console.log('ws:', ws);
+
+        let ws2 = new WeakSet();
+        const obj = {};
+        const foo = {};
+        ws2.add(obj);
+        ws2.add(foo);
+
+        let boo=ws2.has(foo);
+        console.log('boo:', boo);
+
+        ws2.delete(foo);
+        console.log('删除项后ws2:', ws2);
+
+        console.log('w2Size:', ws2.size); // WeakSet没有size属性
+
+
+    </script>
+</body>
+</html>

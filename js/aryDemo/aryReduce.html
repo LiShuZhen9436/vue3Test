@@ -2,24 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数组方法练习</title>
+    <title>数组 Reduce</title>
 </head>
 <body>
     <script>
-        let bilAry=['a','b','c','d','e','f','g','h',{'k':'55'}];
+        let ary =[1,2,3,4,5]
+        let end= ary.reduce((pre, cur) => {
+            return pre+cur
+        }, 0)
+        console.log('end:', end)
+        /* 
+            模拟reduce实现原理
+            callback --> reduce 第一个参数 要执行的函数，第二个参数 函数迭代的初始值
+        */
+        Array.prototype.myReduce=function(callback, initVal){
+            for (let i=0;i<this.length;i++){
+                initVal = callback(initVal, this[i], i, this)
+            }
+            return initVal
+        }
+        let myEnd=ary.myReduce((pre, cur)=>{
+            return pre + cur
+        }, 0)
+        console.log('myEnd:', myEnd)
 
-        console.log('-------------------------every 遍历-------------------------------')
-        let g = bilAry.every((item,index,ary)=>{ // 数组的每一项都遍历 都符合函数条件时 才会返回true 否则返回false  返回值类型为bool
-            return index > -1
-        })
-        console.log('every 遍历：',g)
 
-        console.log('--------------------------some遍历----------------------------------------')
-        let p = bilAry.some((item,index,ary)=>{ // 数组的每一项都遍历 只要有一项符合条件 就会返回true 否则返回false 返回类型为bool
-            return index>4
-        })
-        console.log('some遍历：',p)
 
         console.log('--------------------------reduce 累加器--------------------------------------')
         let sumAry=[1,2,3,4,5]
@@ -87,22 +96,6 @@
             return pre+cur.age
         },0)
         console.log('属性求和：',pSum);
-
-        console.log('-------------------------数组find-----------------------------------')
-        let fArys=[1,2,4,5,6]
-        let res=fArys.find((item,index)=>item>3); // 法返回数组中符合测试函数条件的第一个元素。否则返回undefined 
-        console.log('find返回数据:',res)
-
-        console.log('-------------------------数组 findIndex-----------------------------------------')
-        let findAry=[1,2,3,4,5,6];
-        let r=findAry.findIndex((val,index,obj)=>{ // 返回符合元素的索引值; 只要有一个元素返回 true 则执行完毕返回索引值;如果没有符合的元素则返回-1
-            console.log(val,index,obj)
-            return (val>3) // 返回的索引值 3
-            // return (val===3) // 2
-            // return (val>7) // -1
-        })
-        console.log('findIndex返回数据：',r)
-
     </script>
 </body>
 </html>

@@ -8,13 +8,13 @@
 </head>
 <body>
     <script>
-        function Persion(){
-            var b=0
-        }
-        Persion.prototype.a=5
-        console.dir(Persion)
-        var p1=new Persion()
-        console.log(p1)
+        // function Persion(){
+        //     var b=0
+        // }
+        // Persion.prototype.a=5
+        // console.dir(Persion)
+        // var p1=new Persion()
+        // console.log(p1)
 
         /* ***************分隔符****************************** */
         function Persion(name){
@@ -40,6 +40,7 @@
         }
         var s2=new Student('张灯', '111高中')
         s2.write()
+        s2.eat()
 
         // 修改指向
         Student.prototype=new Persion()
