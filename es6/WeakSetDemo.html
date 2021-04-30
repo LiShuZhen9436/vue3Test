@@ -16,7 +16,7 @@
                 不考虑该对象还存在于 WeakSet 之中
             3、作为构造函数，WeakSet 可以接受一个数组或类似数组的对象作为参数。
               （实际上，任何具有 Iterable 接口的对象，都可以作为 WeakSet 的参数。）该数组的所有成员，都会自动成为 WeakSet 实例对象的成员
-            4、weakSet 没有size属性，也不能forEach因为他是弱类型
+            4、weakSet 没有size属性，也不能遍历不能forEach因为他是弱类型
         */
     
         let ws = new WeakSet([[1,2], [2,3]]);

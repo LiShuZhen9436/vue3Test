@@ -63,6 +63,9 @@
         */
         let fset=new Set(['red', 'green', 'blue']);
         for (let val of fset.keys()){
+            if (val === 'green') {
+                continue
+            }
             console.log('遍历keys：', val); //  red, green, blue
         }
 

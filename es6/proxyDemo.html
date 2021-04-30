@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6 Proxy代理器</title>
+</head>
+<body>
+    <script>
+        // 使用字面量定义对象
+        // let obj = {
+        //     name: '张三',
+        //     age: 22
+        // }
+        // console.log('obj:', obj);
+
+        // function Person(name){
+        //     this.name = name
+        // }
+        // let obj2=new Person('张三');
+        // console.log('obj2:', obj2)
+
+        // let obj1 = Object.create({name: '李四'});
+        // console.log('obj1:', obj1);
+    </script>
+   
+    <script>
+        /*
+            1、Proxy 用于修改某些操作的默认行为;
+            2、Proxy 可以理解成，在目标对象之前架设一层“拦截”，外界对该对象的访问，都必须先通过这层拦截，因此提供了一种机制，可以对外界的访问进行过滤和改写;
+            3、new Proxy()表示生成一个Proxy实例，target参数表示所要拦截的目标对象，handler参数也是一个对象，用来定制拦截行为;
+               如果handler没有设置任何拦截，那就等同于直接通向原对象
+            4、要使得Proxy起作用，必须针对Proxy实例（示例1是proxy对象）进行操作，而不是针对目标对象（示例1是person）进行操作
+        */
+        /*
+            示例1 使用Proxy 实现对 对象get方法得读取操作
+        */
+        let person={
+            name: '张三'
+        }
+        let proxy=new Proxy(person, {
+            /* target目标对象（本例子中是person）； propKey要访问的属性（本例子中访问的name） */
+            get: function(target, propKey){
+                return target[propKey] + '666'
+            }
+        })
+        let name = person.name; // 对目标对象进行操作不起作用
+        console.log('获取name：', name);
+        let namep = proxy.name; // 必须针对Proxy实例进行操作
+        console.log('通过proxy拦截后访问name：', namep);
+
+        /* 示例2 将Proxy对象设置到 属性，从而可以在 对象上调用 */
+        let student = {
+            gread: '三年级',
+            proxy: new Proxy(this, {
+                get:(target, key) => {
+                    console.log(target)
+                    console.log(this)
+                    return this[key] + '888'
+                }
+            })
+        }
+        console.log('获取年级：', student.gread);
+        console.log('proxy获取年级：', student.proxy.gread)
+
+        /* 示例3 将Proxy定义在protoType上面 */
+        let proxy3 = new Proxy({bar: '999'},{
+            get:function(target, key){
+                return target[key] + '999'
+            }
+        })
+        let obj5 = Object.create(proxy3);
+        obj5.foo2='eeeee';
+        console.log('obj5', obj5)
+        console.log('获取定义在protoType上的proxy:', obj5.foo); // obj5上面没有foo 返回underfine  结果：undefined999
+        console.log('获取定义在protoType上的proxy:', obj5.foo2); // eeeee
+        console.log('获取定义在protoType上的proxy:', obj5.bar); // 999999
+
+
+    </script>
+</body>
+</html>
