@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1px 问题</title>
+    <title>1px 问题（在某些机型上1px会比较粗）</title>
+    <!-- 
+        1px 问题的产生原因：
+        要处理这个问题，必须先补充一个知识点，就是设备的 物理像素[设备像素] & 逻辑像素[CSS像素]；
+
+        物理像素：
+        移动设备出厂时，不同设备自带的不同像素，也称硬件像素；
+
+        逻辑像素：
+        即css中记录的像素。
+
+        在开发中，为什么移动端CSS里面写了1px，实际上看起来比1px粗；
+        了解设备物理像素和逻辑像素的同学应该很容易理解，其实这两个px的含义其实是不一样的，
+        UI设计师要求的1px是指设备的物理像素1px，而CSS里记录的像素是逻辑像素，它们之间存在一个比例关系，
+        通常可以用 javascript 中的 window.devicePixelRatio 来获取，
+        也可以用媒体查询的 -webkit-min-device-pixel-ratio 来获取。当然，比例多少与设备相关。
+
+        在手机上border无法达到我们想要的效果。这是因为 devicePixelRatio 特性导致，
+        iPhone的 devicePixelRatio==2，而 border-width: 1px; 描述的是设备独立像素，所以，border被放大到物理像素2px显示，在iPhone上就显得较粗。
+    -->
 </head>
 <style>
     div{

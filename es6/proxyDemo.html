@@ -35,9 +35,11 @@
         */
         /*
             示例1 使用Proxy 实现对 对象get方法得读取操作
+            ** get方法用于拦截某个属性的读取操作，可以接受三个参数，依次为目标对象、属性名和 proxy 实例本身（严格地说，是操作行为所针对的对象），其中最后一个参数可选
         */
         let person={
-            name: '张三'
+            name: '张三',
+            age: 25
         }
         let proxy=new Proxy(person, {
             /* target目标对象（本例子中是person）； propKey要访问的属性（本例子中访问的name） */
@@ -49,8 +51,10 @@
         console.log('获取name：', name);
         let namep = proxy.name; // 必须针对Proxy实例进行操作
         console.log('通过proxy拦截后访问name：', namep);
+        console.log('通过proxy拦截后访问age:', proxy.age);
+        console.log('通过proxy拦截后访问不存在的属性:', proxy.sex); // undefined666
 
-        /* 示例2 将Proxy对象设置到 属性，从而可以在 对象上调用 */
+        /* 示例2 将Proxy对象设置到 属性，从而可以在 对象上调用 (有问题) */
         let student = {
             gread: '三年级',
             proxy: new Proxy(this, {
@@ -77,6 +81,94 @@
         console.log('获取定义在protoType上的proxy:', obj5.foo2); // eeeee
         console.log('获取定义在protoType上的proxy:', obj5.bar); // 999999
 
+
+        // 实现函数链式操作  -- 代码设置 Proxy 以后，达到了将函数名链式使用的效果
+        var pipe = function (value) {
+            var funcStack = [];
+            var oproxy = new Proxy({} , {
+                get : function (pipeObject, fnName) {
+                if (fnName === 'get') {
+                    return funcStack.reduce(function (val, fn) {
+                        console.log('value:', value, 'fn:', fn(val))
+                        return fn(val);
+                    },value);
+                }
+                funcStack.push(window[fnName]);
+                return oproxy;
+                }
+            });
+
+            return oproxy;
+        }
+
+        var double = n => n * 2;
+        var pow    = n => n * n;
+        var reverseInt = n => n.toString().split("").reverse().join("") | 0;
+
+        let res=pipe(3).double.pow.reverseInt.get; // 63
+        console.log('res:', res);
+
+
+        // 使用get拦截，实现数组读取负数的索引 -- 数组的位置参数是-1，就会输出数组的倒数第一个成员
+        function createArray(...elements) {
+            console.log('elements:', elements);
+            let handler = {
+                get(target, propKey, receiver) {
+                    let index = Number(propKey);
+                    if (index < 0) {
+                        propKey = String(target.length + index);
+                    }
+                    return Reflect.get(target, propKey, receiver);
+                }
+            };
+
+            let target = [];
+            target.push(...elements);
+            return new Proxy(target, handler);
+        }
+
+        let arr = createArray('a', 'b', 'c');
+        let r=arr[-1]; // c
+        console.log('r:', r);
+
+        /* 
+            set方法用来拦截某个属性的赋值操作，可以接受四个参数，依次为目标对象、属性名、属性值和 Proxy 实例本身，其中最后一个参数可选
+            set代理应当返回一个布尔值。严格模式下，set代理如果没有返回true，就会报错。
+        */
+        let validator = {
+            set: function(tager, propKey, propVal){
+                if (propKey=='age') {
+                    if (!Number.isInteger(propVal)) {
+                        throw new TypeError('年龄不是整数！')
+                    }
+                }
+                if (propVal > 200) {
+                    throw new RangeError('年龄无效!')
+                }
+                tager[propKey] = propVal
+                return true
+            }
+        }
+        let person2=new Proxy({}, validator);
+        // person2.age='ww';
+        // person2.age = 300;
+        person2.age=130;
+        console.log('age:', person2.age);
+
+        /* 
+            apply方法拦截函数的调用、call和apply 3种操作
+            apply方法可以接受三个参数，分别是目标对象、目标对象的上下文对象（this）和目标对象的参数数组
+        */
+        // 示例1 拦截函数调用
+        let funTarget=function(){
+            console.log('我是funTarget函数')
+        }
+        let proxyFun=new Proxy(funTarget,{
+            apply: function(target, ctx, args){
+                return '我是Proxy拦截方法'
+            }
+        })
+        console.log('apply拦截函数调用：', proxyFun());
 
     </script>
 </body>
