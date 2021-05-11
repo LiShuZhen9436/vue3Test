@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async</title>
+</head>
+<body>
+    <script>
+        /* 
+            函数前面的async关键字，表明该函数内部有异步操作。调用该函数时，会立即返回一个Promise对象
+        */
+        function yb1(){
+            setTimeout(function(){
+                console.log('2000毫秒以后执行的异步方法')
+                // return '111'
+            },2000)
+            // return '333' // 这个会作为.then的参数
+        }
+        function yb2(){
+            setTimeout(function(){
+                console.log('3500毫秒以后执行的异步方法')
+                // return '222'
+            })
+        }
+        async function afun(){
+            let res1=await yb1();
+            return await yb2();
+            // return {res1, res2}
+        }
+        afun().then(res=>{
+            console.log('返回结果：', res);// 会立即返回所以返回值为underfine,underfine 
+        })
+
+        // // async错误处理
+        // async function fun(){
+        //     // throw new Error('出错了')
+        // }
+        // fun().then((r)=>{
+        //     // console.log(r)
+        // })
+
+
+        // async function getTitle() {
+        //     let response = await setTimeout(()=>{
+        //         console.log('ppppp')
+        //         return{'text':'ppppp'}
+        //     },4000);
+        //     let html = await response.text;
+        //     return html;
+        // }
+        // getTitle().then(console.log('hhhh'))
+
+
+        // async function f() {
+        //     await Promise.reject('出错了');
+        //     await Promise.resolve('hello world'); // 不会执行
+        // }
+        // f()
+
+        async function f() {
+            try {
+                await Promise.reject('出错了');
+            } catch(e) {
+            }
+            return await Promise.resolve('hello world');
+        }
+
+        f().then(v => console.log(v))
+    </script>
+</body>
+</html>
