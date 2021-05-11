@@ -33,6 +33,26 @@
 
         let i=0;
 
+
+        console.log('********************for in练习 可以使用break 和 continue退出遍历******************************')
+        let inAry=['a', 'b', 'c', 'd', 'e', 'f'];
+        for(let i in inAry){ // 数组 for in遍历的是索引
+            if (i==3) {
+                // break;
+                continue;
+            }
+            console.log('i:', i);
+        }
+        // 对象使用for in
+        let inObj = {
+            'a': 1,
+            'b': 2,
+            'c': 3
+        }
+        for(let i in inObj){ // 遍历的是对象的键
+            console.log('对象i:', i);
+        }
+
     </script>
 </body>
 </html>

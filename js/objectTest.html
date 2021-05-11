@@ -19,15 +19,17 @@
         }
         let tager = {};
         tager = Object.assign({},source);
-        console.log(tager)
-        //Object.getOwnPropertyDescriptor(tager, 'foo')  // get方法为空
+        console.log('tager:', tager);
+        let aa = Object.getOwnPropertyDescriptor(tager, 'foo'); // get方法为空
+        console.log('获取get方法:', aa);
 
         let tager1 = {};
         // tager1 = Object.assign()
+        // 直接在一个对象上定义一个或多个新的属性或修改现有属性，并返回该对象。
         Object.defineProperties(tager1, Object.getOwnPropertyDescriptors(source));
-        Object.getOwnPropertyDescriptor(tager1, 'foo')
-        console.log(tager1)
-
+        console.log('tager1:', tager1)
+        let bb = Object.getOwnPropertyDescriptor(tager1, 'foo');
+        console.log('获取tager1上的get方法：', bb); // underfine
 
         console.log("******__proto__属性***************");
         let somethig = {
@@ -44,6 +46,8 @@
         }
         obj.__proto__=somethig;
         console.dir(obj);
+        console.log('获取name属性：', obj.name);
+        console.log('执行方法：', obj.getName());
 
         // es6
         let obj1=Object.create(somethig);
@@ -53,8 +57,13 @@
         console.dir(obj1);
 
         // es6 setPrototypeOf 设置一个对象的原型对象
-        let o = Object.setPrototypeOf({},somethig);
+        let o = Object.setPrototypeOf({
+            selfFun(){
+                console.log('自带方法');
+            }
+        },somethig);
         console.log("o:", o);
+        console.dir(o)
 
         // 实例 将proto对象设为obj对象的原型，所以从obj对象可以读取proto对象的属性。
         let proto = {};

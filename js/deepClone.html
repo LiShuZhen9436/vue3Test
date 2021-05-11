@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>深拷贝 浅拷贝示例</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 </head>
 <body>
     <script>
@@ -40,7 +41,71 @@
         console.log('one:',one)
         console.log('two:',two)
 
-        // 深拷贝 两个对象所有的引用都不相同
+        // 数组浅拷贝 直接用=赋值
+        let arry1 = [1,2,3,4,5];
+        let ary2 = arry1;
+        ary2[0]= '111'; // 两个数组的第一个元素都会呗修改为111
+        console.log('arry1:', arry1);
+        console.log('ary2:', ary2);
+
+
+        // 1、深拷贝 两个对象所有的引用都不相同
+        let obj = {
+            name: '张三',
+            age: 23,
+            sex: '女',
+            child: {
+                name: '张孩儿',
+                age: 2,
+                sex: '女'
+            },
+            a(){
+                console.log('对象中的方法')
+            }
+        }
+        // 手写深拷贝 采用递归去拷贝所有层级属性
+        function deepClone(obj){
+            let endObj = Array.isArray(obj) ? [] : {}; // 根据参数 创建一个空数组或者空对象
+            if (obj && typeof obj==='object') { // 参数类型是对象 []或{}都可以进入
+                for (key in obj){
+                    if (obj.hasOwnProperty(key)) { // 检测属性在实例上 不拷贝在原型prototType上面的属性
+                        if (obj[key] && typeof obj[key] === 'object') { // 如果子元素是对象
+                            endObj[key] = deepClone(obj[key]); // 递归调用
+                        } else {
+                            endObj[key] = obj[key]; // 否则直接赋值
+                        }
+                    }
+                }
+            }
+            return endObj
+        }
+        let cloneObj=deepClone(obj);
+        cloneObj.child.sex='男';
+        cloneObj.child.age=3;
+        console.log('自定义深拷贝 -- 原对象：', obj);
+        console.log('自定义深拷贝 -- 深拷贝的对象：', cloneObj);
+
+        let ary3 = deepClone(arry1);
+        ary3[1] = '222';
+        console.log('原数组：', arry1);
+        console.log('深拷贝赋值的数组：', ary3);
+
+        // 2、深拷贝实现方式2  缺点无法拷贝对象中的方法
+        function deepClone2(obj){
+            let strObj = JSON.stringify(obj);
+            let endObj = JSON.parse(strObj);
+            return endObj;
+        }
+        let obj22 = deepClone2(obj);
+        obj22.child.age='111'
+        console.log('深拷贝实现方式2--原对象：', obj);
+        console.log('深拷贝实现方式2--拷贝对象：', obj22);
+
+        // 3、深拷贝实现方式3  通过jQuery的extend方法实现深拷贝
+        let newObj = $.extend(true, {}, obj);
+        newObj.child.name='王五';
+        console.log('extend深拷贝实现方式 -- 原对象：', obj);
+        console.log('extend深拷贝实现方式 -- 拷贝对象：', newObj);
     </script>
 </body>
 </html>

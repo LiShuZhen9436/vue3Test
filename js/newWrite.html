@@ -16,8 +16,9 @@
         }
         function newFun(fn, ...args){ // ...args解构参数
             let son=new Object(); // 新建一个对象
+            console.log('duixiang:', son);
             son.__proto__=fn.prototype;
-            fn.call(son, args); // 调用父函数的构造函数
+            fn.call(son, args); // 调用父函数的构造函数  调用call Dog中的this指向son
             console.dir(son)
             return son
         }

@@ -14,6 +14,7 @@
             context=context || window; // 1、首先context为可选参数，如果不传的话默认上下文是window
             let fn=Symbol();
             context[fn]=this; // 2、接下来给content创建一个fn属性，并将值设置为需要调用的函数
+            console.log('this:', this);
             console.log('context:',context);
             console.log('context:',context[fn]);
             let result = context[fn](...args); // 3、然后调用函数并将对象上的函数删除
@@ -43,7 +44,7 @@
             return function F() {
                 // 因为返回了一个函数，我们可以 new F()，所以需要判断
                 if (this instanceof F) {
-                return new _this(...args, ...arguments)
+                    return new _this(...args, ...arguments)
                 }
                 return _this.apply(context, args.concat(...arguments))
             }
@@ -79,7 +80,7 @@
             Person.myCall(this, name, '333'); // 要使用this使用Main会出现问题 可以继续添加原型链继承得到name的值
             console.log('性别：',this.sex);
         }
-        Man.prototype=Object.create(Person.prototype); // new Person();
+        Man.prototype=Person.prototype; // new Person();
         Man.constructor=Man;
         let man1=new Man('李四', '男');
         console.dir(man1);
