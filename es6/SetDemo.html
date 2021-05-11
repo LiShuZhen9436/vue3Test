@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set 数据解构</title>
+</head>
+<body>
+    <script>
+        /*
+           Set es6提供了新的数据解构，类似于数组，
+           但成员的值都是唯一的，没有重复的值
+        */
+        const s=new Set()
+        let ary =[1, 2, 3, 4, 5, 6, 3, 2, 1]
+        ary.forEach(item => {
+            s.add(item) // 使用add向Set集合中添加项，不会添加重复的值
+        });
+        console.log('新集合：', s); // 1,2,3,4,5,6 没有了重复项
+
+        // 去除数组的重复成员 示例2
+        let ary2 = ['a', 'b', 'a', 'c', 'd', 'e', 'e'];
+        let newAry = [...new Set(ary2)]; 
+        console.log('去除重复项：', newAry); // ["a", "b", "c", "d", "e"]
+
+        // 去除字符串中的重复元素 示例3
+        let endStr = new Set('adaacd');
+        console.log('去除重复项的字符串：', endStr); // a,b,c
+
+        // 去除数组重复元素 示例3
+        let eAry = Array.from(new Set([1,2,3,4,5,5,6,6]));
+        console.log('eAry:', eAry);
+
+        console.log(new Set([{a:1,b:1},{a:2,b:1}]));
+
+        let d = new Set();
+        d.add({a:1});
+        d.add({b:2});
+        console.log('d:', d);
+
+        /* 
+            1、Set函数也可以接收一个数组（或者具有 iterable 接口的其他数据结构）作为参数
+                用来初始化
+            2、delete() 删除某个值 返回bool类型
+            3、has() 判断是否包含指定项 返回bool类型
+            4、Set 键名和键值是同一个值
+        */
+        const s2=new Set([1,2,3,5]);
+        console.log('s2数据：', [...s2]);
+        console.log('size属性获取集合的大小：', s2.size);
+
+        s2.delete(2); // 删除某个值，返回bool值
+        console.log('删除项：', s2);
+
+        console.log('是否包含指定值：', s2.has(3)); // 判断是否包含指定值 返回bool类型
+
+        // console.log('清除所有的项：', s2.clear(), s2); // 清除所有的项
+
+
+        /*
+            Set 遍历
+        */
+        let fset=new Set(['red', 'green', 'blue']);
+        for (let val of fset.keys()){
+            if (val === 'green') {
+                continue
+            }
+            console.log('遍历keys：', val); //  red, green, blue
+        }
+
+        for (let val of fset.values()) {
+            console.log('遍历values：', val); // red, green, blue
+        }
+
+        for (let item of fset.entries()) {
+            console.log('遍历entries:', item); // ["red", "red"]，["green", "green"]， ["blue", "blue"]
+        }
+        fset.forEach(item => {
+            console.log('item:', item);
+        })
+
+        /*
+            使用Set 实现交集 并集 差集
+        */
+        let set3=new Set([1,2,3,4,5]);
+        let set4=new Set([2,5,6,1,9]);
+
+        let union = new Set([...set3, ...set4]);
+        console.log('并集：', union); // 集合1,2,3,4,5,6,9
+
+        let jiaoj = [...set4].filter(item => set3.has(item)); // 交集 [2,5,1]
+        console.log('交集数组：', jiaoj);
+
+        let chaj = [...set4].filter(item => !set3.has(item)); // 差集 [6, 9]
+        console.log('差集：', chaj);
+
+    </script>
+</body>
+</html>

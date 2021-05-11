@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>es6 Symbol</title>
+</head>
+<body>
+    <script>
+        /* 
+            声明一个变量s s是一个独一无二的值。
+            typeof运算符的结果，表明变量s是 Symbol 数据类型
+        */
+        let s=Symbol();
+        let q=Symbol();
+        console.log('s:', s);
+        console.log('q:', q);
+        console.log('判断是s，q两个Symbol是否相等：', s===q)
+        console.log('s的类型：', typeof s)
+
+
+        /*
+            Symbol函数可以接受一个字符串作为参数，表示对 Symbol 实例的描述，
+            主要是为了在控制台显示，或者转为字符串时，比较容易区分
+        */
+        let s1=Symbol('foo');
+        let s2=Symbol('bar');
+        console.log('s1:', s1.toString());
+        console.log('s2:', s2);
+
+        /*
+            获取Symbol的 实例的描述，即上述通过let s1=Symbol('foo')创建添加的参数foo
+        */
+       let s3=Symbol('baz');
+       let ms=s3.description;
+       console.log('s3symbol变量的表述为：', ms);
+
+       console.log('55555:', Symbol.iterator)
+
+       let a={a:1,b:2}
+       let b={b:3,c:4}
+       console.log('合并对象：', {...a, ...b}) // 对象合并后面的对象会把前面的对象覆盖掉
+       console.log('合并数组：', [...[1,2,3], ...[2,3,4,5]]) // 数组合并重复项会合并在一起
+    </script>
+</body>
+</html>

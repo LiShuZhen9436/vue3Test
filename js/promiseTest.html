@@ -10,48 +10,47 @@
         window.onload=function(){
 
             // 串行执行，执行完一个再执行下一个
-            let res=yb().then(res=>{
-                console.log("第一个Promise then 方法获取结果：", res)
+            // let res=yb().then(res=>{
+            //     console.log("第一个Promise then 方法获取结果：", res)
 
-                console.log("**********第一个异步操作执行完成后 调用第二个异步Promise**********")
-                return yb1(res) // 必须有return才能在then方法中获取到返回数据
-            }).then((res1)=>{
-                console.log("第二个Promise then 方法获取结果:",res1)
+            //     console.log("**********第一个异步操作执行完成后 调用第二个异步Promise**********")
+            //     return yb1(res) // 必须有return才能在then方法中获取到返回数据
+            // }).then((res1)=>{
+            //     console.log("第二个Promise then 方法获取结果:",res1)
 
-                console.log("**********第二个异步操作执行完成后 调用第三个异步Promise**********")
-                return yb3(res1)
-            }).then((res3)=>{
-                console.log("第三个Promise then 方法获取结果",res3)
-            })
-            .catch(err=>{
-                console.log("error:", err)
-            })
+            //     console.log("**********第二个异步操作执行完成后 调用第三个异步Promise**********")
+            //     return yb3(res1)
+            // }).then((res3)=>{
+            //     console.log("第三个Promise then 方法获取结果",res3)
+            // })
+            // .catch(err=>{
+            //     console.log("error:", err)
+            // })
 
             // 并行执行多个异步方法
             // Promise.all([yb1({}),yb({}),yb3({})]).then(res=>{
             //     console.log("res:",res)
             // })
 
-            async function a (){
-                console.log("*********async awit*************")
+            // async function a (){
+            //     console.log("*********async awit*************")
 
-                let res= await yb();
-                console.log("第一个异步函数返回结果：", res)
+            //     let res= await yb();
+            //     console.log("第一个异步函数返回结果：", res)
 
-                let res1=await yb3(res);
-                console.log("第二个异步函数返回结果：", res1)
+            //     let res1=await yb3(res);
+            //     console.log("第二个异步函数返回结果：", res1)
 
-                let res2=await yb1(res1);
-                console.log("第三个异步函数返回结果：", res2)
-            }
-
-            console.log('判断会不会被async阻塞')
-
-            setTimeout(a,10000) // 6000 毫秒后调用async函数
+            //     let res2=await yb1(res1);
+            //     console.log("第三个异步函数返回结果：", res2)
+            // }
+            // console.log('判断会不会被async阻塞')
+            // setTimeout(a,10000) // 6000 毫秒后调用async函数
+            // console.log('判断会不会被async阻塞1111111111');
 
             setTimeout(()=>{
                 b()
-            },20000)
+            },2000)
 
             async function b(){
                let b= await Promise.all([yb1({}),yb({}),yb3({})]); // 并行执行多个异步函数

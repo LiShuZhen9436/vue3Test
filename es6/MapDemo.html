@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map 集合</title>
+</head>
+<body>
+    <script>
+        /*
+            1、Map数据结构 类似于对象，也是键值对的集合，
+            但是键的范围不限于字符串，各种类型的值（包括对象）都可以当作键；
+
+            2、事实上，不仅仅是数组，任何具有 Iterator 接口、
+              且每个成员都是一个双元素的数组的数据结构（详见《Iterator》一章）
+              都可以当作Map构造函数的参数。这就是说，Set和Map都可以用来生成新的 Map
+
+            3、Map 的属性size
+            4、Map的方法 set, get, has, delete, clear没有返回值
+            5、Map的遍历方法 keys，values，entries，forEach
+            6、Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就视为两个键。这就解决了同名属性碰撞（clash）的问题
+               如果 Map 的键是一个简单类型的值（数字、字符串、布尔值），则只要两个值严格相等，Map 将其视为一个键 例如：map6
+
+            3、Object对象只能使用字符串当作键；Map解决了这个问题
+        */
+
+        const map = new Map();
+        let objStr = {
+            a: 'Hello Word!'
+        }
+        /* 使用set向map中设置值；将objStr对象设置为key，'值内容'为value */
+        map.set(objStr, '值内容');
+        console.log('map:', map);
+        let getVal = map.get(objStr);
+        console.log('使用get获取map对象上key为‘objStr对象’对应的值：', getVal); // 值内容
+
+        console.log('是否包含指定的值：', map.has(objStr)); //  true
+        map.delete(objStr); // 删除对象上的键
+        console.log(map.has(objStr)); // false 
+
+        /* 向map中添加数组作为参数 */
+        const items = [
+            ['name', '张三'],
+            ['age', 26]
+        ]
+        const map2 = new Map(items);
+        console.log('map2:', map2);
+        console.log('获取map中的name对应的值：', map2.get('name'));
+        console.log('获取age对应的值：', map2.get('age'));
+        /* 上述例子相当于 */
+        let map3 = new Map()
+        items.forEach(([key, value]) => {
+            console.log('key:', key, 'value:', value);
+            map3.set(key, value);
+        })
+        console.log('map3:', map3)
+
+        /* 使用Set 或 Map 当作Map构造函数的参数 */
+        let set = new Set([
+            ['name', '111'],
+            ['age', 33]
+            // ['name'], ['zge']
+        ])
+        let map4 = new Map(set);
+        console.log('使用set初始化Map：', map4);
+
+        /* 对同一个键进行多次赋值，后面的值将覆盖前面的值 */
+        let map5 = new Map();
+        map5.set('a', 1);
+        console.log('map5:', map5)
+        map5.set('a', 666);
+        console.log('重复赋值后的map：', map5);
+
+
+        let k1=['a'];
+        let k2=['a']
+        let map6 = new Map();
+        map6.set(k1, '111').set(k2, '111');
+        console.log('map6:', map6);
+
+        /* Map转数组 */
+        let map7=new Map([
+            [1, 'one'],
+            [2, 'two'],
+            [3, 'three'],
+        ]);
+        console.log('map7:', map7);
+        let mapAry = [...map7.keys()];
+        console.log('mapAry:', mapAry)
+        console.log('Map转数组：', [...map7.entries()]);
+    </script>
+</body>
+</html>

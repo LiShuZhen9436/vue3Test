@@ -42,14 +42,16 @@
             var b=1;
             console.log(this.b)
         }
-        // function a(){
-        //     var b=1;
-        //     console.log(this.b);
-        // }
+        a.call(obj); // 箭头函数的this指向声明时所在的作用域，不能通过apply，bind等修改
+        function a1(){
+            var b=1;
+            console.log('kkkkk:', this.b);
+        }
+        a1()
         var obj={
             "b":666
         }
-        a.call(obj); // 箭头函数的this指向声明时所在的作用域，不能通过apply，bind等修改
+        a1.apply(obj)
     </script>
 </body>
 </html>

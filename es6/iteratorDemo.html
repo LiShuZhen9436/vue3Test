@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iterator 和 for of遍历</title>
+</head>
+<body>
+    <script>
+        var engines = new Set(["Gecko", "Trident", "Webkit", "Webkit"]);
+        for (var e of engines) {
+            console.log(e);
+        }
+
+        var es6 = new Map();
+        es6.set("edition", 6);
+        es6.set("committee", "TC39");
+        es6.set("standard", "ECMA-262");
+        for (var [name, value] of es6) {
+            console.log(name + ": " + value);
+        }
+
+        let map = new Map().set('a', 1).set('b', 2);
+        for (let pair of map) {
+            console.log(pair);
+        }
+
+        for (let [key, value] of map) {
+            console.log(key + ' : ' + value);
+        }
+
+        let ary2=['a', 'b', 'c', 'e', 'f'];
+        // if 可以使用break
+        for (let [j, v] in ary2){ //  0 undefined, 1 undefined ....
+            console.log('j:', j, v);
+            if (j==1) {
+                break;
+            }
+        }
+        for (let [k,v] of ary2){
+            console.log('k:', k, v); // a undefined, b undefined ...
+            if (k=='a') {
+                break;
+            }
+        }
+
+        let obj2={
+            a: '1',
+            b: '2',
+            c: '3',
+            d: '4',
+            e: '5'
+        }
+        for (let [key, val] in obj2){
+            console.log('key:', key,'val:', val); // key: a val: undefined, key: b val: undefined
+        }
+
+        // for (let [key, val] of obj2){
+        //     console.log('key:', key, 'val:', val);
+        // }
+    </script>
+</body>
+</html>

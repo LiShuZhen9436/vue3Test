@@ -19,6 +19,7 @@
     .border::after{ /* 可以模拟一个空心三角形 */
         content: '';
         border-style: solid;
+        /* 上 左右 下 */
         border-width: 0 40px 40px;
         border-color: transparent transparent red;
         position: absolute;
@@ -38,6 +39,24 @@
         border-right: red solid; /* transparent solid */
         border-width: 50px;
     }
+
+    .arrow {
+       position: relative; 
+    }
+    .arrow:after,.arrow:before {
+        width: 0;
+        height: 0;
+        border: 10px solid transparent;
+        border-left-color: white;
+        position: absolute;
+        content: "";
+    }
+    .arrow:before{
+        top: 0;
+        /* 根据实际情况调整 */
+        left: 65px;
+        border-left-color: orange;
+    }
 </style>
 <body>
     <div class="border"></div>
@@ -46,5 +65,9 @@
     <div style="height: 30px;width: 100%"></div>
 
     <div class="border2"></div>
+
+    
+    <div class="arrow">文字文字</div>
+
 </body>
 </html>

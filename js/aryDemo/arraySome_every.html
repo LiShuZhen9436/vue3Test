@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组方法练习</title>
+</head>
+<body>
+    <script>
+        let bilAry=['a','b','c','d','e','f','g','h',{'k':'55'}];
+
+        console.log('-------------------------every 遍历-------------------------------')
+        let g = bilAry.every((item,index,ary)=>{ // 数组的每一项都遍历 都符合函数条件时 才会返回true 否则返回false  返回值类型为bool
+            return index > -1
+        })
+        console.log('every 遍历：',g)
+        /*
+            模拟map实现原理
+            传入的函数执行结果不为true则返回false
+            当所有循环都能执行完时返回true
+        */
+        Array.prototype.myEvery=function(fn){
+            for(let i=0;i<this.length;i++){
+                if (!fn(this[i])) {
+                    return false
+                }
+            }
+            return true
+        }
+        console.log('myEvery执行结果：', [1,2,3].myEvery(item => item > 1))
+
+        console.log('--------------------------some遍历----------------------------------------')
+        let p = bilAry.some((item,index,ary)=>{ // 数组的每一项都遍历 只要有一项符合条件 就会返回true 否则返回false 返回类型为bool
+            return index>4
+        })
+        console.log('some遍历：',p)
+
+        /* 模拟some 实现原理 */
+        Array.prototype.mySome = function(fn){
+            for(let i=0;i<this.length;i++){
+                if(fn(this[i], i)){ // 有返回值时 返回true
+                    return true
+                } else { // 都不满足条件 返回false
+                    return false
+                }
+            }
+        }
+        let res =[2,3,6,3].some((item)=>{
+            return item>5
+        })
+        console.log('res:', res)
+        
+    </script>
+</body>
+</html>

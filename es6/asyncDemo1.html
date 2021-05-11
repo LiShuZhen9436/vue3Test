@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async</title>
+</head>
+<body>
+    <script>
+
+        // 串行执行
+        async function logInOrder(urls) {
+            for (const url of urls) {
+                const response = await url();
+                console.log('判断')
+                console.log('response:', response);
+                console.log(await response.text());
+            }
+            // let d = urls[0]();
+            // const response = await d;
+            // console.log('判断')
+            // console.log('response:', response);
+            // console.log(await response.text());
+        }
+
+        async function logInOrder1(urls) {
+            // 并发读取远程URL
+            const textPromises = urls.map(async url => {
+                console.log('url:', url)
+                const response = await url();
+                console.log('response:', response);
+                return response.text();
+            });
+
+            // 按次序输出
+            console.log('ddd');
+            for (const textPromise of textPromises) {
+                console.log('yyyyyy');
+                console.log(await textPromise);
+            }
+        }
+
+        function a(){
+            return new Promise((res, rej)=>{
+                setTimeout(()=>{
+                    let aa='qqqqq'
+                    console.log('执行a方法')
+                    function text(){
+                        console.log('aa:', aa)
+                        return aa
+                    }
+                    res({'text': text})
+                }, 2000)
+            })
+        }
+        function b(){
+            return new Promise((res, rej)=>{
+                setTimeout(()=>{
+                    let bb='wwww'
+                    function text(){
+                        console.log('bb:', bb)
+                        return bb
+                    }
+                    res({'text': text})
+                },2300)
+            })
+        }
+        // logInOrder([a, b])
+        logInOrder1([a, b])
+    </script>
+</body>
+</html>
