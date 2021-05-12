@@ -42,7 +42,7 @@
             age: 25
         }
         let proxy=new Proxy(person, {
-            /* target目标对象（本例子中是person）； propKey要访问的属性（本例子中访问的name） */
+            /* target目标对象（本例子中是person）； propKey要访问的属性（本例子中访问的name 或 age） */
             get: function(target, propKey){
                 return target[propKey] + '666'
             }
@@ -87,14 +87,14 @@
             var funcStack = [];
             var oproxy = new Proxy({} , {
                 get : function (pipeObject, fnName) {
-                if (fnName === 'get') {
-                    return funcStack.reduce(function (val, fn) {
-                        console.log('value:', value, 'fn:', fn(val))
-                        return fn(val);
-                    },value);
-                }
-                funcStack.push(window[fnName]);
-                return oproxy;
+                    if (fnName === 'get') {
+                        return funcStack.reduce(function (val, fn) {
+                            console.log('value:', value, 'fn:', fn(val))
+                            return fn(val);
+                        },value);
+                    }
+                    funcStack.push(window[fnName]);
+                    return oproxy;
                 }
             });
 
@@ -156,7 +156,7 @@
         console.log('age:', person2.age);
 
         /* 
-            apply方法拦截函数的调用、call和apply 3种操作
+            apply方法拦截 函数的调用、call和apply 3种操作
             apply方法可以接受三个参数，分别是目标对象、目标对象的上下文对象（this）和目标对象的参数数组
         */
         // 示例1 拦截函数调用

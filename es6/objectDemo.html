@@ -25,8 +25,7 @@
         let brith = '2021/04/22';
         let person = {
             name: '张三',
-            // 相当于brith: brith
-            brith,
+            brith, // 相当于brith: brith
             /* 相当于
             getName：function () {
                 console.log('名字：', this.name)
@@ -72,6 +71,10 @@
 
 
         console.log("*******************super 关键字****************************")
+        /* 
+            this关键字总是指向函数所在的当前对象，ES6 又新增了另一个类似的关键字super，指向当前对象的原型对象
+            super关键字表示原型对象时，只能用在对象的方法之中，用在其他地方都会报错
+        */
         const proto = {
             name: '122'
         }
@@ -135,7 +138,7 @@
             }
         }
         // console.log('获取name属性：', message.body.user.firstName); // 这个当某属性不存在时会导致报错所 以正确的写法如下：
-        const firstName = (message && message.body && message.body.user && message.body.user.firstName) || 'defaule';
+        const firstName = (message && message.body && message.body.user && message.body.user.firstName) || 'default';
         console.log('firstName:', firstName);
 
         // es2020 新增 链判断运算符

@@ -57,6 +57,58 @@
         left: 65px;
         border-left-color: orange;
     }
+
+    .demo{
+        width: 50px;
+        height: 50px;
+        border: 40px solid;
+        border-color: orange blue red green;
+        margin-bottom: 20px;
+    }
+    /* 没有上部边框 */
+    .demo1{
+        border-right: red solid;
+        border-left: blueviolet solid;
+        border-bottom: orange solid;
+        border-width: 50px;
+        width: 0px;
+        margin-bottom: 20px;
+    }
+    /* 没有下部边框 */
+    .demo2{
+        border-right: red solid;
+        border-left: blueviolet solid;
+        border-top: orange solid;
+        border-width: 50px;
+        width: 0px;
+        margin-bottom: 20px;
+    }
+    /* 没有右边边框 */
+    .demo3{
+        border-left: blueviolet solid;
+        border-top: orange solid;
+        border-bottom: palegreen solid;
+        border-width: 50px;
+        width: 0px;
+        margin-bottom: 20px;
+    }
+    /* 没有左边边框 */
+    .demo4{
+        border-right: blueviolet solid;
+        border-top: orange solid;
+        border-bottom: palegreen solid;
+        border-width: 50px;
+        width: 0px;
+        margin-bottom: 20px;
+    }
+    /* 没有左边边框和上部边框 */
+    .demo5{
+        border-right: blueviolet solid;
+        border-bottom: palegreen solid;
+        border-width: 50px;
+        width: 0px;
+        margin-bottom: 20px;
+    }
 </style>
 <body>
     <div class="border"></div>
@@ -69,5 +121,13 @@
     
     <div class="arrow">文字文字</div>
 
+    <div>
+        <div class="demo"></div>
+        <div class="demo1"></div>
+        <div class="demo2"></div>
+        <div class="demo3"></div>
+        <div class="demo4"></div>
+        <div class="demo5"></div>
+    </div>
 </body>
 </html>

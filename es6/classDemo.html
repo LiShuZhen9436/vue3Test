@@ -33,7 +33,7 @@
         console.log('p1:', p1.toString())
 
         /* class静态方法 */
-        class class1{ // 类中不定义constructor时，会默认生成一个空的构造函数
+        class class1{ // 类中不定义constructor时，会默认生成一个空的constructor构造函数
             static smethod(){ // 静态方法
                 console.log('我是静态方法，不需要new可以调用！')
                 return 'hello!'
@@ -62,7 +62,7 @@
         // 老式写法 定义静态属性
         class c2{
         }
-        c2.prop=2; // prop金泰属性
+        c2.prop=2; // prop静态属性
         console.log('类的静态属性：', c2.prop);
         let c22=new c2()
         console.log('实例化类调用静态方法：', c22.prop); // underfine 不能再实例上调用静态属性
