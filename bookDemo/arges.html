@@ -10,7 +10,7 @@
     <script>
         // es5 求和
         let values=[1,2,3,4,5];
-        function getSum(){
+        function getSum(a){
             console.log('arguments:',arguments)
             let sum=0;
             for(let i=0;i<arguments.length;i++){
@@ -19,10 +19,10 @@
             }
             return sum;
         }
-        console.log(getSum(values));
-        console.log(getSum.apply(null,values))
+        console.log('求和1：', getSum(values)); // 传入得values是一个数组
+        console.log('求和2：', getSum.apply(null,values)) // 传入得values是一个一个得值，通过apply变成了一个一个得值
 
-        console.log(getSum(...values));
+        console.log('求和3：', getSum(...values)); // 与求和2结果一样，传入得参数值一样都是通过解构得到得一个一个得值
 
         // function getSum1(...values){
         //     console.log('values:',values);
