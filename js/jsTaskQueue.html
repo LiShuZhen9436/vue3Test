@@ -12,7 +12,9 @@
         setTimeout(macroCallback, 0); // 加入到异步进程，异步进程处理完成后加入到 宏任务（任务队列）队列
         new Promise(function(resolve, reject) {
             console.log('2, time = ' + new Date().toString()) // 同步执行 打印 2
-            resolve(); // 同步执行
+            resolve( 
+                setTimeout(function(){console.log('9, resolve 打印！！！！！')}, 0)
+            ); // 同步执行
             console.log('3, time = ' + new Date().toString()) // 同步执行 打印 3
         }).then(microCallback); // 加入到异步进程，异步进程处理完成后加入到 微任务（任务队列）队列
 

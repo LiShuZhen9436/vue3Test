@@ -17,14 +17,15 @@
         }
         var cats = new Cat('有鱼',2,'英短');
         var dogs = new Dog('哈士奇');
-        console.log(cats instanceof Cat);  // true
-        console.log(dogs instanceof Dog);  // true
-        console.log(cats instanceof Object);  // true
-        console.log(dogs instanceof Object);  // true
+        // console.log(cats instanceof Cat);  // true
+        // console.log(dogs instanceof Dog);  // true
+        // console.log(cats instanceof Object);  // true
+        // console.log(dogs instanceof Object);  // true
 
-        // console.log(instance_of(cats, Cat));  // true
+        console.log(instance_of(cats, Cat));  // true
+        console.log(instance_of(cats, Array)); 
         // console.log(instance_of(dogs, Dog));  // true
-        console.log(instance_of(cats, Object));  // true
+        // console.log(instance_of(cats, Object));  // true
         // console.log(instance_of(dogs, Object));  // true
 
         // 手写instanceof
@@ -33,6 +34,7 @@
             L=L.__proto__;
             while(true){
                 //console.dir(L)
+                // console.log('L', L)
                 if(L===null)
                     return false
                 if (L===O)

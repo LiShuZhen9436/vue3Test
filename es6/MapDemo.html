@@ -36,7 +36,10 @@
         console.log('使用get获取map对象上key为‘objStr对象’对应的值：', getVal); // 值内容
 
         console.log('是否包含指定的值：', map.has(objStr)); //  true
-        map.delete(objStr); // 删除对象上的键
+        let del = map.delete(objStr); // 删除对象上的键
+        console.log('删除键：', del); // true
+        let del1 = map.delete('a'); // 删除对象上的键
+        console.log('删除键1：', del1); // false
         console.log(map.has(objStr)); // false 
 
         /* 向map中添加数组作为参数 */
