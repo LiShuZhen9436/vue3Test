@@ -8,6 +8,7 @@
 <body>
     <script>
         function* fibs() {
+            debugger
             let a = 0;
             let b = 1;
             while (true) {
@@ -18,6 +19,7 @@
 
         console.log("********************数组解构******************************************")
         let [first, second, third, fourth, fifth, sixth] = fibs();
+        console.log(first, second, third, fourth, fifth, sixth);
         console.log('sixth:',sixth);
 
         // 解构赋值使用默认值 （ **只有数组成员赋值严格等于undefined, 默认值才会生效）

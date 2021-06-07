@@ -136,8 +136,8 @@
         }
 
         // 扁平化数组 第一种方法
-        let arys=['a', ['b', 'c', 'd'], 'e', ['f', 'g']]
-        console.log(arys.flat(2));
+        let arys=['a', ['b', 'c', 'd', [1, 2]], 'e', ['f', 'g']]
+        console.log(arys.flat(3));
 
         // 第二种方法
         let r= arys.reduce((pre, cur)=>{
@@ -145,6 +145,13 @@
             return pre
         }, [])
         console.log('r::', r);
+
+        function aaa(arys) { // 使用reduce扁平化多层数组
+            return arys.reduce((pre, cur)=>{
+                return pre.concat(Array.isArray(cur)?aaa(cur):cur)
+            }, [])
+        }
+        console.log('DDDDD:', aaa(arys));
 
         // 第三种方法
         function* bp(ary){
